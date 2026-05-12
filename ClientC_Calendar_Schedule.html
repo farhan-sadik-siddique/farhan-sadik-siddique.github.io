@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Executive Weekly Schedule — Farhan Siddique VA Services</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: #f0f2f5; color: #1a1a2e; }
+
+  .page-header {
+    background: linear-gradient(135deg, #1F3864 0%, #2E5FA3 100%);
+    color: white; padding: 28px 40px 20px;
+    display: flex; justify-content: space-between; align-items: flex-end;
+    border-bottom: 4px solid #F39C12;
+  }
+  .page-header .title-block h1 { font-size: 26px; font-weight: 700; letter-spacing: 0.5px; }
+  .page-header .title-block p { font-size: 13px; opacity: 0.8; margin-top: 4px; }
+  .page-header .meta { text-align: right; font-size: 12px; opacity: 0.75; line-height: 1.8; }
+  .page-header .meta strong { color: #F39C12; font-size: 14px; }
+
+  .legend-bar {
+    background: white; padding: 12px 40px; display: flex; gap: 24px; align-items: center;
+    border-bottom: 1px solid #ddd; flex-wrap: wrap;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  }
+  .legend-bar span { font-size: 11px; font-weight: 600; color: #555; text-transform: uppercase; letter-spacing: 0.5px; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #333; }
+  .legend-dot { width: 12px; height: 12px; border-radius: 3px; flex-shrink: 0; }
+
+  .calendar-container { padding: 24px 40px 40px; overflow-x: auto; }
+
+  .calendar-grid {
+    display: grid;
+    grid-template-columns: 72px repeat(7, 1fr);
+    min-width: 960px;
+    border: 1px solid #d0d5e0;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    background: white;
+  }
+
+  .day-header {
+    background: #1F3864; color: white;
+    padding: 14px 8px 10px; text-align: center;
+    border-right: 1px solid #2E5FA3;
+  }
+  .day-header .day-name { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; opacity: 0.8; }
+  .day-header .day-date { font-size: 20px; font-weight: 700; margin-top: 2px; }
+  .day-header .day-sub { font-size: 10px; opacity: 0.65; margin-top: 1px; }
+  .time-header { background: #1F3864; border-right: 1px solid #2E5FA3; }
+
+  .time-col {
+    background: #f8f9fb; border-right: 1px solid #e0e4ec;
+    display: flex; align-items: flex-start; justify-content: flex-end;
+    padding: 4px 8px 0; font-size: 11px; font-weight: 600; color: #7a8099;
+    border-bottom: 1px solid #eaecf2; min-height: 60px;
+  }
+  .time-col.half { background: #f8f9fb; min-height: 30px; border-bottom: 1px dashed #eee; }
+
+  .cell {
+    border-right: 1px solid #e8eaf0;
+    border-bottom: 1px solid #eaecf2;
+    min-height: 60px; position: relative;
+    padding: 2px;
+    vertical-align: top;
+  }
+  .cell.half { min-height: 30px; border-bottom: 1px dashed #eee; }
+  .cell:last-child { border-right: none; }
+
+  .event {
+    border-radius: 5px; padding: 5px 7px;
+    font-size: 11px; line-height: 1.4; margin: 1px;
+    position: relative; overflow: hidden;
+    border-left: 3px solid transparent;
+  }
+  .event .ev-time { font-size: 10px; opacity: 0.75; margin-bottom: 1px; font-weight: 500; }
+  .event .ev-title { font-weight: 700; font-size: 11.5px; }
+  .event .ev-detail { font-size: 10px; opacity: 0.8; margin-top: 1px; }
+  .event .ev-tag {
+    display: inline-block; font-size: 9px; font-weight: 700;
+    padding: 1px 5px; border-radius: 10px; margin-top: 3px;
+    text-transform: uppercase; letter-spacing: 0.5px;
+  }
+
+  /* Event type colours */
+  .ev-admin { background: #EEF2FF; border-left-color: #4F46E5; color: #312E81; }
+  .ev-admin .ev-tag { background: #4F46E5; color: white; }
+
+  .ev-client { background: #ECFDF5; border-left-color: #059669; color: #064E3B; }
+  .ev-client .ev-tag { background: #059669; color: white; }
+
+  .ev-research { background: #FFF7ED; border-left-color: #D97706; color: #78350F; }
+  .ev-research .ev-tag { background: #D97706; color: white; }
+
+  .ev-comms { background: #EFF6FF; border-left-color: #2563EB; color: #1E3A8A; }
+  .ev-comms .ev-tag { background: #2563EB; color: white; }
+
+  .ev-data { background: #FDF4FF; border-left-color: #9333EA; color: #3B0764; }
+  .ev-data .ev-tag { background: #9333EA; color: white; }
+
+  .ev-meeting { background: #FFF1F2; border-left-color: #E11D48; color: #881337; }
+  .ev-meeting .ev-tag { background: #E11D48; color: white; }
+
+  .ev-personal { background: #F0FDF4; border-left-color: #16A34A; color: #14532D; }
+  .ev-personal .ev-tag { background: #16A34A; color: white; }
+
+  .ev-blocked { background: #F9FAFB; border-left-color: #9CA3AF; color: #6B7280; }
+  .ev-blocked .ev-tag { background: #9CA3AF; color: white; }
+
+  .week-summary {
+    display: grid; grid-template-columns: repeat(7,1fr); gap: 12px;
+    margin-top: 24px; min-width: 960px;
+  }
+  .summary-card {
+    background: white; border-radius: 8px; padding: 14px 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06); border-top: 3px solid #2E5FA3;
+  }
+  .summary-card .sc-day { font-size: 11px; font-weight: 700; color: #1F3864; text-transform: uppercase; letter-spacing: 0.5px; }
+  .summary-card .sc-count { font-size: 26px; font-weight: 800; color: #2E5FA3; margin: 4px 0 2px; }
+  .summary-card .sc-label { font-size: 10px; color: #888; }
+  .summary-card .sc-hours { font-size: 12px; color: #444; margin-top: 6px; font-weight: 600; }
+
+  .footer-bar {
+    background: #1F3864; color: rgba(255,255,255,0.7); text-align: center;
+    padding: 14px; font-size: 11px; margin-top: 0;
+  }
+  .footer-bar strong { color: #F39C12; }
+
+  @media print {
+    body { background: white; }
+    .calendar-container { padding: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="title-block">
+    <h1>Executive Weekly Schedule</h1>
+    <p>Week of 12–18 May 2026 &nbsp;|&nbsp; Prepared &amp; Managed by Farhan Siddique, VA Services</p>
+  </div>
+  <div class="meta">
+    <strong>CLIENT C — EXECUTIVE CALENDAR</strong><br>
+    Farhan Siddique | Virtual Assistant &amp; Data Specialist<br>
+    farhan.siddique.va@gmail.com | May 2026<br>
+    Coverage: Monday–Sunday | 08:00–19:00
+  </div>
+</div>
+
+<div class="legend-bar">
+  <span>Task Types:</span>
+  <div class="legend-item"><div class="legend-dot" style="background:#4F46E5;"></div> Admin &amp; Planning</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#059669;"></div> Client Work</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#D97706;"></div> Research</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#2563EB;"></div> Communications</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#9333EA;"></div> Data &amp; Reports</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#E11D48;"></div> Meetings &amp; Calls</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#16A34A;"></div> Personal / Break</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#9CA3AF;"></div> Blocked / Focus</div>
+</div>
+
+<div class="calendar-container">
+<div class="calendar-grid">
+
+  <!-- HEADER ROW -->
+  <div class="time-header"></div>
+  <div class="day-header">
+    <div class="day-name">Monday</div>
+    <div class="day-date">12</div>
+    <div class="day-sub">May 2026</div>
+  </div>
+  <div class="day-header">
+    <div class="day-name">Tuesday</div>
+    <div class="day-date">13</div>
+    <div class="day-sub">May 2026</div>
+  </div>
+  <div class="day-header">
+    <div class="day-name">Wednesday</div>
+    <div class="day-date">14</div>
+    <div class="day-sub">May 2026</div>
+  </div>
+  <div class="day-header">
+    <div class="day-name">Thursday</div>
+    <div class="day-date">15</div>
+    <div class="day-sub">May 2026</div>
+  </div>
+  <div class="day-header">
+    <div class="day-name">Friday</div>
+    <div class="day-date">16</div>
+    <div class="day-sub">May 2026</div>
+  </div>
+  <div class="day-header" style="background:#16336b;">
+    <div class="day-name">Saturday</div>
+    <div class="day-date">17</div>
+    <div class="day-sub">May 2026</div>
+  </div>
+  <div class="day-header" style="background:#16336b;">
+    <div class="day-name">Sunday</div>
+    <div class="day-date">18</div>
+    <div class="day-sub">May 2026</div>
+  </div>
+
+  <!-- 08:00 -->
+  <div class="time-col">08:00</div>
+  <div class="cell">
+    <div class="event ev-admin">
+      <div class="ev-time">08:00–08:30</div>
+      <div class="ev-title">Morning Briefing Prep</div>
+      <div class="ev-detail">Review exec's diary, flag priorities, prep briefing notes</div>
+      <div class="ev-tag">Admin</div>
+    </div>
+  </div>
+  <div class="cell">
+    <div class="event ev-comms">
+      <div class="ev-time">08:00–09:00</div>
+      <div class="ev-title">Inbox Zero — Priority Sort</div>
+      <div class="ev-detail">Process overnight emails, flag urgent, draft 3 replies</div>
+      <div class="ev-tag">Comms</div>
+    </div>
+  </div>
+  <div class="cell">
+    <div class="event ev-admin">
+      <div class="ev-time">08:00–08:30</div>
+      <div class="ev-title">Midweek Status Check</div>
+      <div class="ev-detail">Update task tracker, reprioritise Thursday deliverables</div>
+      <div class="ev-tag">Admin</div>
+    </div>
+  </div>
+  <div class="cell">
+    <div class="event ev-comms">
+      <div class="ev-time">08:00–09:00</div>
+      <div class="ev-title">Email Management</div>
+      <div class="ev-detail">Process 40+ emails, triage, draft responses for approval</div>
+      <div class="ev-tag">Comms</div>
+    </div>
+  </div>
+  <div class="cell">
+    <div class="event ev-admin">
+      <div class="ev-time">08:00–08:45</div>
+      <div class="ev-title">EOW Planning Session</div>
+      <div class="ev-detail">Compile week summary, prep Mon briefing notes, flag carryovers</div>
+      <div class="ev-tag">Admin</div>
+    </div>
+  </div>
+  <div class="cell" style="background:#FAFAFA;">
+    <div class="event ev-blocked">
+      <div class="ev-time">08:00–10:00</div>
+      <div class="ev-title">Weekend — Reduced Hours</div>
+      <div class="ev-detail">Emergency monitoring only. Auto-reply active.</div>
+      <div class="ev-tag">Blocked</div>
+    </div>
+  </div>
+  <div class="cell" style="background:#FAFAFA;">
+    <div class="event ev-blocked">
+      <div class="ev-time">08:00–12:00</div>
+      <div class="ev-title">Weekend — Off</div>
+      <div class="ev-detail">Personal time. Emergency contact via signal only.</div>
+      <div class="ev-tag">Blocked</div>
+    </div>
+  </div>
+
+  <!-- 08:30 -->
+  <div class="time-col half">08:30</div>
+  <div class="cell half">
+    <div class="event ev-comms" style="font-size:10px;padding:3px 6px;">
+      <div class="ev-title" style="font-size:10.5px;">Inbox Triage — Reply Drafts</div>
+    </div>
+  </div>
+  <div class="cell half"></div>
+  <div class="cell half">
+    <div class="event ev-meeting" style="font-size:10px;padding:3px 6px;">
+      <div class="ev-title" style="font-size:10.5px;">Stand-up call — Exec Team (15 min)</div>
+    </div>
+  </div>
+  <div class="cell half"></div>
+  <div class="cell half"></div>
+  <div class="cell half" style="background:#FAFAFA;"></div>
+  <div class="cell half" style="background:#FAFAFA;"></div>
+
+  <!-- 09:00 -->
+  <div class="time-col">09:00</div>
+  <div class="cell">
+    <div class="event ev-meeting">
+      <div class="ev-time">09:00–09:45</div>
+      <div class="ev-title">Weekly Exec Sync Call</div>
+      <div class="ev-detail">Zoom — Agenda prep done Sun. Take minutes, action items.</div>
+      <div class="ev-tag">Meeting</div>
+    </div>
+  </div>
+  <div class="cell">
+    <div class="event ev-data">
+      <div class="ev-time">09:00–11:00</div>
+      <div class="ev-title">CRM Data Cleanup — ClientB</div>
+      <div class="ev-detail">Deduplicate 62 contacts, standardise phone/email formats</div>
+      <div class="ev-tag">Data</div>
+    </div>
+  </div>
+  <div class="cell">
+    <div class="event ev-client">
+      <div class="ev-time">09:00–10:30</div>
+      <div class="ev-title">ClientA Report Drafting</div>
+      <div class="ev-detail">PM Tools research report — sections 4–7, comparison table</div>
+      <div class="ev-tag">Client</div>
+    </div>
+  </div>
+  <div class="cell">
+    <div class="event ev-meeting">
+      <div class="ev-time">09:00–10:00</div>
+      <div class="ev-title">ClientA Discovery Call</div>
+      <div class="ev-detail">Zoom — onboard new project scope, record + transcribe</div>
+      <div class="ev-tag">Meeting</div>
+    </div>
+  </div>
+  <div class="cell">
+    <div class="event ev-data">
+      <div class="ev-time">09:00–11:00</div>
+      <div class="ev-title">Monthly Report Compilation</div>
+      <div class="ev-detail">Aggregate KPIs, draft exec summary, format in Excel/PDF</div>
+      <div class="ev-tag">Data</div>
+    </div>
+  </div>
+  <div class="cell" style="background:#FAFAFA;">
+    <div class="event ev-admin">
+      <div class="ev-time">09:00–11:00</div>
+      <div class="ev-title">Urgent Catch-up (if needed)</div>
+      <div class="ev-detail">Buffer for Friday overflow or urgent Mon deliverables</div>
+      <div class="ev-tag">Admin</div>
+    </div>
+  </div>
+  <div class="cell" style="background:#FAFAFA;"></div>
+
+  <!-- 09:30 -->
+  <div class="time-col half">09:30</div>
+  <div class="cell half"></div>
+  <div class="cell half"></div>
+  <div class="cell half"></div>
+  <div class="cell half">
+    <div class="event ev-research" style="font-size:10px;padding:3px 6px;">
+      <div class="ev-title" style="font-size:10.5px;">Competitor pricing research — ClientD</div>
+    </div>
+  </div>
+  <div class="cell half"></div>
+  <div class="cell half" style="background:#FAFAFA;"></div>
+  <div class="cell half" style="background:#FAFAFA;"></div>
+
+  <!-- 10:00 -->
+  <div class="time-col">10:00</div>
+  <div class="cell">
+    <div class="event ev-data">
+      <div class="ev-time">10:00–12:00</div>
+      <div class="ev-title">Expense Tracker Build</div>
+      <div class="ev-detail">ABC Store — Jan–Jun 2026 data entry, 6 monthly sheets, KPIs</div>
+      <div class="ev-tag">Data</div>
+    </div>
+  </div>
+  <div class="cell"></div>
+  <div class="cell">
+    <div class="event ev-research">
+      <div class="ev-time">10:30–12:30</div>
+      <div class="ev-title">Web Research — PM Tools</div>
+      <div class="ev-detail">Review G2, Capterra, vendor sites. Gather pricing &amp; ratings data.</div>
+      <div class="ev-tag">Research</div>
+    </div>
+  </div>
+  <div class="cell">
+    <div class="event ev-client">
+      <div class="ev-time">10:00–12:00</div>
+      <div class="ev-title">Inventory System Build</div>
+      <div class="ev-detail">ABC Store — 80 SKUs, 4-tab workbook, low stock alerts</div>
+      <div class="ev-tag">Client</div>
+    </div>
+  </div>
+  <div class="cell"></div>
+  <div class="cell" style="background:#FAFAFA;"></div>
+  <div class="cell" style="background:#FAFAFA;">
+    <div class="event ev-personal">
+      <div class="ev-time">10:00–18:00</div>
+      <div class="ev-title">Personal Day</div>
+      <div class="ev-detail">Rest &amp; recovery. All client comms paused.</div>
+      <div class="ev-tag">Personal</div>
+    </div>
+  </div>
+
+  <!-- 10:30 -->
+  <div class="time-col half">10:30</div>
+  <div class="cell half"></div>
+  <div class="cell half">
+    <div class="event ev-client" style="font-size:10px;padding:3px 6px;">
+      <div class="ev-title" style="font-size:10.5px;">ClientB — PDF to Excel conversion, 50 rows</div>
+    </div>
+  </div>
+  <div class="cell half"></div>
+  <div class="cell half"></div>
+  <div class="cell half">
+    <div class="event ev-comms" style="font-size:10px;padding:3px 6px;">
+      <div class="ev-title" style="font-size:10.5px;">Send week-end status update to all clients</div>
+    </div>
+  </div>
+  <div class="cell half" style="background:#FAFAFA;"></div>
+  <div class="cell half" style="background:#FAFAFA;"></div>
+
+  <!-- 11:00 -->
+  <div class="time-col">11:00</div>
+  <div class="cell"></div>
+  <div class="cell"></div>
+  <div class="cell"></div>
+  <div class="cell"></div>
+  <div class="cell">
+    <div class="event ev-meeting">
+      <div class="ev-time">11:00–11:30</div>
+      <div class="ev-title">ClientC Check-in Call</div>
+      <div class="ev-detail">Weekly update — calendar, tasks, upcoming week planning</div>
+      <div class="ev-tag">Meeting</div>
+    </div>
+  </div>
+  <div class="cell" style="background:#FAFAFA;"></div>
+  <div class="cell" style="background:#FAFAFA;"></div>
+
+  <!-- 11:30 -->
+  <div class="time-col half">11:30</div>
+  <div class="cell half">
+    <div class="event ev-personal" style="font-size:10px;padding:3px 6px;">
+      <div class="ev-title" style="font-size:10.5px;">Break — 30 min</div>
+    </div>
+  </div>
+  <div class="cell half">
+    <div class="event ev-personal" style="font-size:10px;padding:3px 6px;">
+      <div class="ev-title" style="font-size:10.5px;">Break — 30 min</div>
+    </div>
+  </div>
+  <div class="cell half">
+    <div class="event ev-personal" style="font-size:10px;padding:3px 6px;">
+      <div class="ev-title" style="font-size:10.5px;">Break — 30 min</div>
+    </div>
+  </div>
+  <div class="cell half">
+    <div class="event ev-personal" style="font-size:10px;padding:3px 6px;">
+      <div class="ev-title" style="font-size:10.5px;">Break — 30 min</div>
+    </div>
+  </div>
+  <div class="cell half"></div>
+  <div class="cell half" style="background:#FAFAFA;"></div>
+  <div class="cell half" style="background:#FAFAFA;"></div>
+
+  <!-- 12:00 LUNCH -->
+  <div class="time-col">12:00</div>
+  <div class="cell"><div class="event ev-personal"><div class="ev-time">12:00–13:00</div><div class="ev-title">Lunch Break</div><div class="ev-tag">Personal</div></div></div>
+  <div class="cell"><div class="event ev-personal"><div class="ev-time">12:00–13:00</div><div class="ev-title">Lunch Break</div><div class="ev-tag">Personal</div></div></div>
+  <div class="cell"><div class="event ev-personal"><div class="ev-time">12:00–13:00</div><div class="ev-title">Lunch Break</div><div class="ev-tag">Personal</div></div></div>
+  <div class="cell"><div class="event ev-personal"><div class="ev-time">12:00–13:00</div><div class="ev-title">Lunch Break</div><div class="ev-tag">Personal</div></div></div>
+  <div class="cell"><div class="event ev-personal"><div class="ev-time">12:00–13:00</div><div class="ev-title">Lunch Break</div><div class="ev-tag">Personal</div></div></div>
+  <div class="cell" style="background:#FAFAFA;"><div class="event ev-personal"><div class="ev-time">12:00–13:00</div><div class="ev-title">Lunch</div><div class="ev-tag">Personal</div></div></div>
+  <div class="cell" style="background:#FAFAFA;"></div>
+
+  <!-- 13:00 -->
+  <div class="time-col">13:00</div>
+  <div class="cell">
+    <div class="event ev-research">
+      <div class="ev-time">13:00–15:00</div>
+      <div class="ev-title">Market Research — ClientD</div>
+      <div class="ev-detail">Competitor analysis, pricing survey, SWOT data gathering</div>
+      <div class="ev-tag">Research</div>
+    </div>
+  </div>
+  <div class="cell">
+    <div class="event ev-admin">
+      <div class="ev-time">13:00–14:00</div>
+      <div class="ev-title">Admin Block — Invoicing</div>
+      <div class="ev-detail">Raise May invoices, update billing tracker, send to clients</div>
+      <div class="ev-tag">Admin</div>
+    </div>
+  </div>
+  <div class="cell">
+    <div class="event ev-meeting">
+      <div class="ev-time">13:00–14:00</div>
+      <div class="ev-title">Supplier Negotiation Call</div>
+      <div class="ev-detail">On behalf of ClientC — pricing review with 2 vendors</div>
+      <div class="ev-tag">Meeting</div>
+    </div>
+  </div>
+  <div class="cell">
+    <div class="event ev-data">
+      <div class="ev-time">13:00–15:30</div>
+      <div class="ev-title">Dashboard Build — ClientD</div>
+      <div class="ev-detail">Sales performance dashboard, Excel + conditional formatting</div>
+      <div class="ev-tag">Data</div>
+    </div>
+  </div>
+  <div class="cell">
+    <div class="event ev-comms">
+      <div class="ev-time">13:00–14:00</div>
+      <div class="ev-title">Email Drafts — ClientD</div>
+      <div class="ev-detail">5 email templates: follow-up, onboarding, invoice, meeting req</div>
+      <div class="ev-tag">Comms</div>
+    </div>
+  </div>
+  <div class="cell" style="background:#FAFAFA;">
+    <div class="event ev-personal">
+      <div class="ev-time">13:00–15:00</div>
+      <div class="ev-title">Personal Time</div>
+      <div class="ev-detail">Errands / downtime</div>
+      <div class="ev-tag">Personal</div>
+    </div>
+  </div>
+  <div class="cell" style="background:#FAFAFA;"></div>
+
+  <!-- 13:30 -->
+  <div class="time-col half">13:30</div>
+  <div class="cell half"></div>
+  <div class="cell half">
+    <div class="event ev-client" style="font-size:10px;padding:3px 6px;">
+      <div class="ev-title" style="font-size:10.5px;">ClientA — Report QA &amp; final formatting</div>
+    </div>
+  </div>
+  <div class="cell half"></div>
+  <div class="cell half"></div>
+  <div class="cell half"></div>
+  <div class="cell half" style="background:#FAFAFA;"></div>
+  <div class="cell half" style="background:#FAFAFA;"></div>
+
+  <!-- 14:00 -->
+  <div class="time-col">14:00</div>
+  <div class="cell"></div>
+  <div class="cell">
+    <div class="event ev-meeting">
+      <div class="ev-time">14:00–15:00</div>
+      <div class="ev-title">ClientB Onboarding Call</div>
+      <div class="ev-detail">Zoom — intro call, scope review, data handover process</div>
+      <div class="ev-tag">Meeting</div>
+    </div>
+  </div>
+  <div class="cell">
+    <div class="event ev-data">
+      <div class="ev-time">14:00–16:00</div>
+      <div class="ev-title">PDF → Excel Conversion</div>
+      <div class="ev-detail">XYZ Ltd invoice data, 50+ rows, 3-tab workbook build</div>
+      <div class="ev-tag">Data</div>
+    </div>
+  </div>
+  <div class="cell"></div>
+  <div class="cell">
+    <div class="event ev-admin">
+      <div class="ev-time">14:00–15:00</div>
+      <div class="ev-title">Portfolio Update</div>
+      <div class="ev-detail">Add completed work samples, update LinkedIn, Upwork profile</div>
+      <div class="ev-tag">Admin</div>
+    </div>
+  </div>
+  <div class="cell" style="background:#FAFAFA;"></div>
+  <div class="cell" style="background:#FAFAFA;"></div>
+
+  <!-- 15:00 -->
+  <div class="time-col">15:00</div>
+  <div class="cell">
+    <div class="event ev-comms">
+      <div class="ev-time">15:00–16:00</div>
+      <div class="ev-title">Social Media Scheduling</div>
+      <div class="ev-detail">ClientC — 14 LinkedIn posts, schedule via Buffer for 2 weeks</div>
+      <div class="ev-tag">Comms</div>
+    </div>
+  </div>
+  <div class="cell">
+    <div class="event ev-admin">
+      <div class="ev-time">15:00–16:30</div>
+      <div class="ev-title">Project Management Admin</div>
+      <div class="ev-detail">Update ClickUp tasks, log hours, close completed tickets</div>
+      <div class="ev-tag">Admin</div>
+    </div>
+  </div>
+  <div class="cell"></div>
+  <div class="cell">
+    <div class="event ev-research">
+      <div class="ev-time">15:30–17:00</div>
+      <div class="ev-title">Industry News Digest</div>
+      <div class="ev-detail">Compile weekly newsletter for ClientC exec — 5 key stories</div>
+      <div class="ev-tag">Research</div>
+    </div>
+  </div>
+  <div class="cell">
+    <div class="event ev-client">
+      <div class="ev-time">15:00–17:00</div>
+      <div class="ev-title">ClientC — HTML Calendar Build</div>
+      <div class="ev-detail">Design &amp; code weekly schedule HTML file, colour-coded</div>
+      <div class="ev-tag">Client</div>
+    </div>
+  </div>
+  <div class="cell" style="background:#FAFAFA;">
+    <div class="event ev-research">
+      <div class="ev-time">15:00–17:00</div>
+      <div class="ev-title">Skill Development Block</div>
+      <div class="ev-detail">Advanced Excel course — PivotTables, Power Query module 4</div>
+      <div class="ev-tag">Research</div>
+    </div>
+  </div>
+  <div class="cell" style="background:#FAFAFA;"></div>
+
+  <!-- 16:00 -->
+  <div class="time-col">16:00</div>
+  <div class="cell">
+    <div class="event ev-meeting">
+      <div class="ev-time">16:00–16:30</div>
+      <div class="ev-title">Internal Team Check-in</div>
+      <div class="ev-detail">Slack huddle — project status, blockers, priorities for Tue</div>
+      <div class="ev-tag">Meeting</div>
+    </div>
+  </div>
+  <div class="cell"></div>
+  <div class="cell">
+    <div class="event ev-comms">
+      <div class="ev-time">16:00–17:00</div>
+      <div class="ev-title">Client Communication Batch</div>
+      <div class="ev-detail">Reply to all pending client messages, send 3 status updates</div>
+      <div class="ev-tag">Comms</div>
+    </div>
+  </div>
+  <div class="cell"></div>
+  <div class="cell"></div>
+  <div class="cell" style="background:#FAFAFA;"></div>
+  <div class="cell" style="background:#FAFAFA;"></div>
+
+  <!-- 16:30 -->
+  <div class="time-col half">16:30</div>
+  <div class="cell half">
+    <div class="event ev-data" style="font-size:10px;padding:3px 6px;">
+      <div class="ev-title" style="font-size:10.5px;">Update KPI tracker — all active clients</div>
+    </div>
+  </div>
+  <div class="cell half">
+    <div class="event ev-comms" style="font-size:10px;padding:3px 6px;">
+      <div class="ev-title" style="font-size:10.5px;">Draft newsletter — ClientC weekly digest</div>
+    </div>
+  </div>
+  <div class="cell half"></div>
+  <div class="cell half">
+    <div class="event ev-meeting" style="font-size:10px;padding:3px 6px;">
+      <div class="ev-title" style="font-size:10.5px;">ClientD — Quick debrief call (20 min)</div>
+    </div>
+  </div>
+  <div class="cell half">
+    <div class="event ev-admin" style="font-size:10px;padding:3px 6px;">
+      <div class="ev-title" style="font-size:10.5px;">Time log audit — reconcile all hours for week</div>
+    </div>
+  </div>
+  <div class="cell half" style="background:#FAFAFA;"></div>
+  <div class="cell half" style="background:#FAFAFA;"></div>
+
+  <!-- 17:00 -->
+  <div class="time-col">17:00</div>
+  <div class="cell">
+    <div class="event ev-admin">
+      <div class="ev-time">17:00–18:00</div>
+      <div class="ev-title">EOD Wrap-up &amp; Planning</div>
+      <div class="ev-detail">Close tasks, update log, prep tomorrow's agenda &amp; briefing notes</div>
+      <div class="ev-tag">Admin</div>
+    </div>
+  </div>
+  <div class="cell">
+    <div class="event ev-admin">
+      <div class="ev-time">17:00–18:00</div>
+      <div class="ev-title">EOD Wrap-up</div>
+      <div class="ev-detail">Task log, tomorrow prep, send EOD summary to ClientC exec</div>
+      <div class="ev-tag">Admin</div>
+    </div>
+  </div>
+  <div class="cell">
+    <div class="event ev-admin">
+      <div class="ev-time">17:00–17:30</div>
+      <div class="ev-title">EOD Review</div>
+      <div class="ev-detail">Log completed tasks, flag any carryovers to Thursday</div>
+      <div class="ev-tag">Admin</div>
+    </div>
+  </div>
+  <div class="cell">
+    <div class="event ev-admin">
+      <div class="ev-time">17:00–18:00</div>
+      <div class="ev-title">Thursday EOD + Fri Prep</div>
+      <div class="ev-detail">Consolidate deliverables, send Friday agenda to exec, log time</div>
+      <div class="ev-tag">Admin</div>
+    </div>
+  </div>
+  <div class="cell">
+    <div class="event ev-admin">
+      <div class="ev-time">17:00–18:00</div>
+      <div class="ev-title">Week Closedown</div>
+      <div class="ev-detail">Archive completed files, send week report to all 4 clients</div>
+      <div class="ev-tag">Admin</div>
+    </div>
+  </div>
+  <div class="cell" style="background:#FAFAFA;">
+    <div class="event ev-personal">
+      <div class="ev-time">17:00–19:00</div>
+      <div class="ev-title">Personal Time</div>
+      <div class="ev-tag">Personal</div>
+    </div>
+  </div>
+  <div class="cell" style="background:#FAFAFA;"></div>
+
+  <!-- 18:00 -->
+  <div class="time-col">18:00</div>
+  <div class="cell"><div class="event ev-personal"><div class="ev-time">18:00–19:00</div><div class="ev-title">Personal Time / Wind-down</div><div class="ev-tag">Personal</div></div></div>
+  <div class="cell"><div class="event ev-personal"><div class="ev-time">18:00–19:00</div><div class="ev-title">Personal Time / Wind-down</div><div class="ev-tag">Personal</div></div></div>
+  <div class="cell">
+    <div class="event ev-blocked">
+      <div class="ev-time">17:30–19:00</div>
+      <div class="ev-title">Focus Block — Deep Work</div>
+      <div class="ev-detail">No meetings. Complete HTML calendar file, final QA</div>
+      <div class="ev-tag">Blocked</div>
+    </div>
+  </div>
+  <div class="cell"><div class="event ev-personal"><div class="ev-time">18:00–19:00</div><div class="ev-title">Personal Time</div><div class="ev-tag">Personal</div></div></div>
+  <div class="cell"><div class="event ev-personal"><div class="ev-time">18:00–19:00</div><div class="ev-title">Personal Time</div><div class="ev-tag">Personal</div></div></div>
+  <div class="cell" style="background:#FAFAFA;"></div>
+  <div class="cell" style="background:#FAFAFA;"></div>
+
+</div><!-- end grid -->
+
+<!-- WEEK SUMMARY CARDS -->
+<div class="week-summary">
+  <div class="summary-card">
+    <div class="sc-day">Monday</div>
+    <div class="sc-count">6</div>
+    <div class="sc-label">Tasks Scheduled</div>
+    <div class="sc-hours">~9 hrs active</div>
+  </div>
+  <div class="summary-card">
+    <div class="sc-day">Tuesday</div>
+    <div class="sc-count">7</div>
+    <div class="sc-label">Tasks Scheduled</div>
+    <div class="sc-hours">~9 hrs active</div>
+  </div>
+  <div class="summary-card">
+    <div class="sc-day">Wednesday</div>
+    <div class="sc-count">7</div>
+    <div class="sc-label">Tasks Scheduled</div>
+    <div class="sc-hours">~9.5 hrs active</div>
+  </div>
+  <div class="summary-card">
+    <div class="sc-day">Thursday</div>
+    <div class="sc-count">6</div>
+    <div class="sc-label">Tasks Scheduled</div>
+    <div class="sc-hours">~9 hrs active</div>
+  </div>
+  <div class="summary-card">
+    <div class="sc-day">Friday</div>
+    <div class="sc-count">8</div>
+    <div class="sc-label">Tasks Scheduled</div>
+    <div class="sc-hours">~9 hrs active</div>
+  </div>
+  <div class="summary-card" style="border-top-color:#9CA3AF;">
+    <div class="sc-day">Saturday</div>
+    <div class="sc-count">2</div>
+    <div class="sc-label">Reduced / Monitoring</div>
+    <div class="sc-hours">Emergency only</div>
+  </div>
+  <div class="summary-card" style="border-top-color:#9CA3AF;">
+    <div class="sc-day">Sunday</div>
+    <div class="sc-count">0</div>
+    <div class="sc-label">Day Off</div>
+    <div class="sc-hours">Personal rest</div>
+  </div>
+</div>
+
+</div><!-- end calendar-container -->
+
+<div class="footer-bar">
+  Prepared by <strong>Farhan Siddique</strong> | Virtual Assistant &amp; Data Specialist |
+  farhan.siddique.va@gmail.com | <strong>May 2026</strong> &nbsp;|&nbsp;
+  Confidential — Client C Executive Calendar &nbsp;|&nbsp; Week 20 of 2026
+</div>
+
+</body>
+</html>

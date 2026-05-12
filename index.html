@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Farhan Siddique — Digital Marketer & Data Analyst</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:       #05040d;
+  --bg2:      #09071a;
+  --bg3:      #0d0b1f;
+  --border:   #1c1635;
+  --border2:  #2a2050;
+  --purple:   #6c5ce7;
+  --purple2:  #a29bfe;
+  --purple3:  #4a3f9e;
+  --muted:    #3d3460;
+  --text:     #ccc8e8;
+  --text2:    #7b74a8;
+  --text3:    #4a4470;
+  --white:    #f0eeff;
+  --gold:     #c9a84c;
+  --gold2:    #e8c96a;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* ── CURSOR ── */
+.cursor {
+  position: fixed; width: 8px; height: 8px;
+  background: var(--purple2); border-radius: 50%;
+  pointer-events: none; z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.1s, background 0.2s;
+  mix-blend-mode: screen;
+}
+.cursor-ring {
+  position: fixed; width: 32px; height: 32px;
+  border: 1px solid rgba(162,155,254,0.3);
+  border-radius: 50%; pointer-events: none; z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: transform 0.18s ease, width 0.2s, height 0.2s, border-color 0.2s;
+}
+
+/* ── NOISE OVERLAY ── */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+/* ── AMBIENT GLOW ── */
+.glow-orb {
+  position: fixed; border-radius: 50%; filter: blur(120px);
+  pointer-events: none; z-index: 0; opacity: 0.12;
+}
+.glow-1 { width: 600px; height: 600px; background: var(--purple3); top: -200px; right: -100px; }
+.glow-2 { width: 400px; height: 400px; background: #1a0a4a; bottom: 20%; left: -100px; }
+.glow-3 { width: 300px; height: 300px; background: var(--purple); top: 60%; right: 10%; opacity: 0.06; }
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1.5rem 3rem;
+  background: linear-gradient(180deg, rgba(5,4,13,0.98) 0%, transparent 100%);
+  border-bottom: 0.5px solid transparent;
+  transition: border-color 0.3s, backdrop-filter 0.3s;
+}
+nav.scrolled {
+  border-bottom-color: var(--border);
+  backdrop-filter: blur(20px);
+  background: rgba(5,4,13,0.85);
+}
+.nav-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px; font-weight: 300; letter-spacing: 0.25em;
+  text-transform: uppercase; color: var(--white);
+  text-decoration: none;
+}
+.nav-logo span { color: var(--purple2); font-style: italic; }
+.nav-links { display: flex; gap: 2.5rem; align-items: center; }
+.nav-links a {
+  font-size: 10.5px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--text3); text-decoration: none; transition: color 0.2s;
+  font-weight: 400;
+}
+.nav-links a:hover { color: var(--text); }
+.nav-cta {
+  font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+  border: 0.5px solid var(--border2); color: var(--purple2);
+  padding: 8px 20px; text-decoration: none;
+  transition: all 0.2s; background: transparent;
+}
+.nav-cta:hover { border-color: var(--purple2); background: rgba(108,92,231,0.08); }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh; display: flex; flex-direction: column;
+  justify-content: center; align-items: center; text-align: center;
+  padding: 8rem 2rem 4rem; position: relative; overflow: hidden;
+}
+
+.hero-eyebrow {
+  display: flex; align-items: center; gap: 14px;
+  font-family: 'DM Mono', monospace; font-size: 10px;
+  letter-spacing: 0.3em; text-transform: uppercase; color: var(--muted);
+  margin-bottom: 2.5rem;
+  animation: fadeUp 0.8s ease both;
+}
+.hero-eyebrow::before, .hero-eyebrow::after {
+  content: ''; width: 40px; height: 0.5px;
+  background: linear-gradient(90deg, transparent, var(--muted));
+}
+.hero-eyebrow::after { background: linear-gradient(270deg, transparent, var(--muted)); }
+
+.hero-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(64px, 10vw, 110px); font-weight: 300;
+  line-height: 0.9; color: var(--white); letter-spacing: 0.04em;
+  margin-bottom: 1.5rem;
+  animation: fadeUp 0.8s 0.1s ease both;
+}
+.hero-name .italic { font-style: italic; color: var(--purple2); }
+.hero-name .line2 { display: block; color: var(--text2); font-size: 0.55em; letter-spacing: 0.12em; margin-top: 0.4em; font-weight: 300; }
+
+.hero-divider {
+  width: 1px; height: 60px;
+  background: linear-gradient(180deg, var(--border2), transparent);
+  margin: 0 auto 1.5rem;
+  animation: fadeUp 0.8s 0.2s ease both;
+}
+
+.hero-desc {
+  font-size: 14px; color: var(--text2); line-height: 2;
+  max-width: 440px; font-weight: 300; margin-bottom: 3rem;
+  animation: fadeUp 0.8s 0.3s ease both;
+}
+
+.hero-tags {
+  display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;
+  margin-bottom: 3rem;
+  animation: fadeUp 0.8s 0.4s ease both;
+}
+.tag {
+  font-family: 'DM Mono', monospace; font-size: 9.5px;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  border: 0.5px solid var(--border2); color: var(--text3);
+  padding: 6px 14px;
+}
+
+.hero-btns {
+  display: flex; gap: 14px; justify-content: center;
+  animation: fadeUp 0.8s 0.5s ease both;
+}
+.btn-primary {
+  font-family: 'DM Sans', sans-serif; font-size: 11px;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  background: var(--purple3); border: 0.5px solid var(--purple);
+  color: var(--white); padding: 14px 36px; text-decoration: none;
+  transition: all 0.25s; cursor: none;
+}
+.btn-primary:hover { background: var(--purple); box-shadow: 0 0 30px rgba(108,92,231,0.3); }
+.btn-ghost {
+  font-family: 'DM Sans', sans-serif; font-size: 11px;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  background: transparent; border: 0.5px solid var(--border2);
+  color: var(--text2); padding: 14px 36px; text-decoration: none;
+  transition: all 0.25s; cursor: none;
+}
+.btn-ghost:hover { border-color: var(--text2); color: var(--text); }
+
+.hero-scroll {
+  position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  letter-spacing: 0.2em; text-transform: uppercase; color: var(--text3);
+  animation: fadeUp 0.8s 0.8s ease both;
+}
+.scroll-line {
+  width: 0.5px; height: 40px;
+  background: linear-gradient(180deg, var(--border2), transparent);
+  animation: scrollPulse 2s ease infinite;
+}
+
+/* ── DIVIDER ── */
+.divider {
+  width: 100%; height: 0.5px;
+  background: linear-gradient(90deg, transparent, var(--border2) 30%, var(--border2) 70%, transparent);
+  position: relative; z-index: 1;
+}
+
+/* ── SECTION BASE ── */
+section { position: relative; z-index: 1; }
+
+.section-header {
+  display: flex; align-items: flex-start; gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+.section-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 72px; font-weight: 300; line-height: 0.8;
+  color: var(--border2); letter-spacing: -0.02em;
+  flex-shrink: 0;
+}
+.section-meta { padding-top: 8px; }
+.section-label {
+  font-family: 'DM Mono', monospace; font-size: 9.5px;
+  letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 6px;
+}
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 32px; font-weight: 300; color: var(--white);
+  letter-spacing: 0.06em;
+}
+
+/* ── STATS BAR ── */
+.stats-bar {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  border: 0.5px solid var(--border);
+  margin: 0 3rem;
+}
+.stat-item {
+  padding: 2.5rem 2rem; text-align: center;
+  border-right: 0.5px solid var(--border);
+  position: relative; overflow: hidden;
+}
+.stat-item:last-child { border-right: none; }
+.stat-item::before {
+  content: ''; position: absolute; bottom: 0; left: 20%; right: 20%; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--purple3), transparent);
+}
+.stat-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 52px; font-weight: 300; color: var(--purple2);
+  line-height: 1; margin-bottom: 8px;
+}
+.stat-label {
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  letter-spacing: 0.22em; text-transform: uppercase; color: var(--text3);
+}
+
+/* ── SERVICES ── */
+.services-section { padding: 5rem 3rem; }
+
+.services-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px;
+  background: var(--border);
+}
+.service-card {
+  background: var(--bg); padding: 3rem 2.5rem;
+  position: relative; overflow: hidden;
+  transition: background 0.3s;
+}
+.service-card:hover { background: var(--bg2); }
+.service-card::before {
+  content: ''; position: absolute; top: 0; left: 0;
+  width: 3px; height: 0; background: var(--purple);
+  transition: height 0.4s ease;
+}
+.service-card:hover::before { height: 100%; }
+.service-card-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 11px; color: var(--text3); letter-spacing: 0.2em;
+  margin-bottom: 1.5rem; font-style: italic;
+}
+.service-card-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px; font-weight: 400; color: var(--white);
+  letter-spacing: 0.04em; margin-bottom: 1rem;
+}
+.service-card-desc {
+  font-size: 13px; color: var(--text2); line-height: 1.9;
+  font-weight: 300; margin-bottom: 2rem;
+}
+.service-includes {
+  display: flex; flex-direction: column; gap: 6px;
+  margin-bottom: 2rem;
+}
+.service-include-item {
+  font-size: 12px; color: var(--text3); display: flex; align-items: center; gap: 8px;
+}
+.service-include-item::before {
+  content: ''; width: 16px; height: 0.5px;
+  background: var(--purple3); flex-shrink: 0;
+}
+.service-price {
+  font-family: 'DM Mono', monospace; font-size: 11px;
+  letter-spacing: 0.15em; color: var(--purple2);
+  text-transform: uppercase; border-top: 0.5px solid var(--border);
+  padding-top: 1.5rem; margin-top: auto;
+}
+
+.service-card.featured {
+  background: var(--bg2);
+  grid-column: span 2;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;
+}
+.service-card.featured .service-content { }
+.service-card.featured .service-visual {
+  display: flex; align-items: center; justify-content: center;
+}
+.service-badge {
+  font-family: 'DM Mono', monospace; font-size: 8.5px;
+  letter-spacing: 0.25em; text-transform: uppercase;
+  background: rgba(108,92,231,0.12); border: 0.5px solid var(--purple3);
+  color: var(--purple2); padding: 4px 12px; display: inline-block;
+  margin-bottom: 1.5rem;
+}
+
+/* ── PORTFOLIO ── */
+.portfolio-section { padding: 5rem 3rem; }
+
+.portfolio-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+  background: var(--border);
+}
+.portfolio-card {
+  background: var(--bg); padding: 2.5rem 2rem;
+  position: relative; overflow: hidden; cursor: none;
+  transition: background 0.3s;
+}
+.portfolio-card:hover { background: var(--bg2); }
+.portfolio-card-type {
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 1.25rem;
+  display: flex; align-items: center; gap: 8px;
+}
+.portfolio-card-type::after {
+  content: ''; flex: 1; height: 0.5px;
+  background: linear-gradient(90deg, var(--border), transparent);
+}
+.portfolio-card-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px; font-weight: 400; color: var(--white);
+  letter-spacing: 0.03em; margin-bottom: 0.75rem;
+}
+.portfolio-card-desc {
+  font-size: 12px; color: var(--text3); line-height: 1.8; font-weight: 300;
+}
+.portfolio-card-tag {
+  display: inline-block; margin-top: 1.5rem;
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--purple2); border-bottom: 0.5px solid var(--purple3);
+  padding-bottom: 1px;
+}
+
+/* ── CREDENTIALS ── */
+.credentials-section { padding: 5rem 3rem; }
+
+.cred-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+  background: var(--border);
+}
+.cred-card {
+  background: var(--bg); padding: 1.75rem 1.75rem;
+  position: relative; transition: background 0.25s;
+}
+.cred-card:hover { background: var(--bg2); }
+.cred-issuer {
+  font-family: 'DM Mono', monospace; font-size: 8.5px;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--text3); margin-bottom: 8px;
+}
+.cred-name {
+  font-size: 13px; color: var(--text); font-weight: 400;
+  letter-spacing: 0.01em; line-height: 1.5;
+}
+.cred-card::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, var(--purple3), transparent);
+  opacity: 0; transition: opacity 0.3s;
+}
+.cred-card:hover::after { opacity: 1; }
+
+/* ── CONTACT ── */
+.contact-section { padding: 5rem 3rem 4rem; }
+
+.contact-inner {
+  border: 0.5px solid var(--border);
+  display: grid; grid-template-columns: 1fr 1fr;
+}
+.contact-left {
+  padding: 4rem 3rem; border-right: 0.5px solid var(--border);
+}
+.contact-headline {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 48px; font-weight: 300; color: var(--white);
+  letter-spacing: 0.04em; line-height: 1.1; margin-bottom: 1.5rem;
+}
+.contact-headline em { color: var(--purple2); font-style: italic; }
+.contact-body {
+  font-size: 13px; color: var(--text2); line-height: 1.9;
+  font-weight: 300; margin-bottom: 2.5rem;
+}
+.contact-links { display: flex; flex-direction: column; gap: 12px; }
+.contact-link {
+  display: flex; align-items: center; gap: 16px;
+  text-decoration: none; group: true; padding: 1rem 1.25rem;
+  border: 0.5px solid var(--border); transition: border-color 0.2s, background 0.2s;
+}
+.contact-link:hover { border-color: var(--border2); background: var(--bg2); }
+.contact-link-label {
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  letter-spacing: 0.2em; text-transform: uppercase; color: var(--text3);
+  width: 60px; flex-shrink: 0;
+}
+.contact-link-value {
+  font-size: 13px; color: var(--purple2); font-weight: 300;
+}
+
+.contact-right {
+  padding: 4rem 3rem;
+  display: flex; flex-direction: column; justify-content: space-between;
+}
+.availability-block { margin-bottom: 3rem; }
+.avail-label {
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--text3); margin-bottom: 1rem;
+}
+.avail-status {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 13px; color: var(--text); font-weight: 300;
+}
+.avail-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: #2ecc71; flex-shrink: 0;
+  box-shadow: 0 0 8px #2ecc71;
+  animation: pulse 2s ease infinite;
+}
+.info-rows { display: flex; flex-direction: column; gap: 1px; }
+.info-row {
+  display: flex; justify-content: space-between;
+  padding: 1rem 0; border-bottom: 0.5px solid var(--border);
+}
+.info-row-key {
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  letter-spacing: 0.2em; text-transform: uppercase; color: var(--text3);
+}
+.info-row-val { font-size: 12px; color: var(--text2); font-weight: 300; }
+
+/* ── FOOTER ── */
+footer {
+  padding: 2rem 3rem;
+  border-top: 0.5px solid var(--border);
+  display: flex; justify-content: space-between; align-items: center;
+  position: relative; z-index: 1;
+}
+.footer-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 14px; font-weight: 300; color: var(--text3);
+  letter-spacing: 0.15em;
+}
+.footer-copy {
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  letter-spacing: 0.15em; text-transform: uppercase; color: var(--text3);
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.3; transform: scaleY(1); }
+  50%       { opacity: 0.8; transform: scaleY(1.1); }
+}
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 8px #2ecc71; }
+  50%       { box-shadow: 0 0 16px #2ecc71; }
+}
+
+/* ── SCROLL REVEAL ── */
+.reveal {
+  opacity: 0; transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  nav { padding: 1.2rem 1.5rem; }
+  .nav-links { display: none; }
+  .stats-bar { grid-template-columns: repeat(2, 1fr); margin: 0 1.5rem; }
+  .services-section, .portfolio-section, .credentials-section, .contact-section { padding: 3rem 1.5rem; }
+  .services-grid { grid-template-columns: 1fr; }
+  .service-card.featured { grid-column: span 1; grid-template-columns: 1fr; }
+  .service-card.featured .service-visual { display: none; }
+  .portfolio-grid { grid-template-columns: 1fr; }
+  .cred-grid { grid-template-columns: repeat(2, 1fr); }
+  .contact-inner { grid-template-columns: 1fr; }
+  .contact-left { border-right: none; border-bottom: 0.5px solid var(--border); padding: 2.5rem 1.75rem; }
+  .contact-right { padding: 2.5rem 1.75rem; }
+  .contact-headline { font-size: 36px; }
+  footer { flex-direction: column; gap: 8px; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- AMBIENT -->
+<div class="glow-orb glow-1"></div>
+<div class="glow-orb glow-2"></div>
+<div class="glow-orb glow-3"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">Farhan <span>Siddique</span></a>
+  <div class="nav-links">
+    <a href="#services">Services</a>
+    <a href="#portfolio">Work</a>
+    <a href="#credentials">Credentials</a>
+    <a href="#contact">Contact</a>
+    <a href="https://www.fiverr.com/farhan712006" target="_blank" class="nav-cta">Hire Me ↗</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">Digital Marketer · Data Analyst · AI Workflows</div>
+  <h1 class="hero-name serif">
+    Farhan <span class="italic">Siddique</span>
+    <span class="line2">Marketer · Analyst · Builder</span>
+  </h1>
+  <div class="hero-divider"></div>
+  <p class="hero-desc">
+    HubSpot & Google certified. Specialising in SEO, email marketing, Excel dashboards, and AI-powered workflows for businesses that want measurable results.
+  </p>
+  <div class="hero-tags">
+    <span class="tag">SEO Audits</span>
+    <span class="tag">Email Marketing</span>
+    <span class="tag">Excel Dashboards</span>
+    <span class="tag">Social Media</span>
+    <span class="tag">AI Workflows</span>
+    <span class="tag">Business Analysis</span>
+  </div>
+  <div class="hero-btns">
+    <a href="https://www.fiverr.com/farhan712006" target="_blank" class="btn-primary">Hire on Fiverr ↗</a>
+    <a href="#portfolio" class="btn-ghost">View Work ↓</a>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- STATS -->
+<div class="stats-bar reveal">
+  <div class="stat-item">
+    <div class="stat-num">58+</div>
+    <div class="stat-label">Certifications</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">19</div>
+    <div class="stat-label">Portfolio Pieces</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">5</div>
+    <div class="stat-label">Core Services</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">5h+</div>
+    <div class="stat-label">Daily Availability</div>
+  </div>
+</div>
+
+<div class="divider" style="margin-top:0"></div>
+
+<!-- SERVICES -->
+<section class="services-section" id="services">
+  <div class="section-header reveal">
+    <div class="section-num">01</div>
+    <div class="section-meta">
+      <div class="section-label">What I deliver</div>
+      <div class="section-title">Services</div>
+    </div>
+  </div>
+
+  <div class="services-grid">
+
+    <div class="service-card reveal">
+      <div class="service-card-num">Service · 001</div>
+      <div class="service-badge">Most Popular</div>
+      <div class="service-card-title">SEO Audit Report</div>
+      <div class="service-card-desc">A full professional SEO audit covering on-page optimisation, Core Web Vitals, backlink profile analysis, technical issues, and a prioritised 90-day action plan.</div>
+      <div class="service-includes">
+        <div class="service-include-item">On-page & technical SEO analysis</div>
+        <div class="service-include-item">Core Web Vitals assessment</div>
+        <div class="service-include-item">Backlink profile report</div>
+        <div class="service-include-item">Prioritised recommendations</div>
+        <div class="service-include-item">90-day action plan</div>
+      </div>
+      <div class="service-price">From $30 · PDF Delivery</div>
+    </div>
+
+    <div class="service-card reveal">
+      <div class="service-card-num">Service · 002</div>
+      <div class="service-card-title">Excel Dashboard</div>
+      <div class="service-card-desc">Custom Excel dashboards built to your exact requirements — sales trackers, budget dashboards, KPI monitors, HR performance reports, and marketing ROI trackers.</div>
+      <div class="service-includes">
+        <div class="service-include-item">Multi-tab dashboard structure</div>
+        <div class="service-include-item">Advanced formulas & automation</div>
+        <div class="service-include-item">Colour-coded KPI indicators</div>
+        <div class="service-include-item">Charts & visual summaries</div>
+        <div class="service-include-item">Sample data pre-filled</div>
+      </div>
+      <div class="service-price">From $40 · XLSX Delivery</div>
+    </div>
+
+    <div class="service-card reveal">
+      <div class="service-card-num">Service · 003</div>
+      <div class="service-card-title">Email Marketing Setup</div>
+      <div class="service-card-desc">Complete email marketing sequences — welcome flows, nurture campaigns, onboarding series — fully written, structured, and ready to paste into HubSpot or Mailchimp.</div>
+      <div class="service-includes">
+        <div class="service-include-item">3–5 email sequence written</div>
+        <div class="service-include-item">Subject lines & preview text</div>
+        <div class="service-include-item">Send timing & segmentation logic</div>
+        <div class="service-include-item">HubSpot / Mailchimp setup guide</div>
+      </div>
+      <div class="service-price">From $50 · DOCX + Setup Guide</div>
+    </div>
+
+    <div class="service-card reveal">
+      <div class="service-card-num">Service · 004</div>
+      <div class="service-card-title">Social Media Calendar</div>
+      <div class="service-card-desc">A complete 30-day content calendar with captions, hashtags, posting schedule, and content strategy — tailored to your brand and platform of choice.</div>
+      <div class="service-includes">
+        <div class="service-include-item">30 posts fully written</div>
+        <div class="service-include-item">Captions, hashtags & timing</div>
+        <div class="service-include-item">Platform-specific strategy</div>
+        <div class="service-include-item">Engagement & growth tactics</div>
+      </div>
+      <div class="service-price">From $30 · XLSX Delivery</div>
+    </div>
+
+    <div class="service-card reveal">
+      <div class="service-card-num">Service · 005</div>
+      <div class="service-card-title">VA & Data Entry</div>
+      <div class="service-card-desc">Fast, accurate virtual assistant support — data entry, PDF to Excel conversion, CRM cleanup, web research reports, email drafts, and calendar/schedule management.</div>
+      <div class="service-includes">
+        <div class="service-include-item">Data entry & PDF conversion</div>
+        <div class="service-include-item">CRM data cleaning & audit</div>
+        <div class="service-include-item">Web research reports</div>
+        <div class="service-include-item">Email drafting & scheduling</div>
+        <div class="service-include-item">Admin & document support</div>
+      </div>
+      <div class="service-price">From $5 · Fast Turnaround</div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="portfolio-section" id="portfolio">
+  <div class="section-header reveal">
+    <div class="section-num">02</div>
+    <div class="section-meta">
+      <div class="section-label">Sample work</div>
+      <div class="section-title">Portfolio</div>
+    </div>
+  </div>
+
+  <div class="portfolio-grid">
+
+    <div class="portfolio-card reveal">
+      <div class="portfolio-card-type">Excel Dashboard</div>
+      <div class="portfolio-card-title">Sales Performance Tracker</div>
+      <div class="portfolio-card-desc">Multi-tab e-commerce sales dashboard with revenue trends, product deep-dive analysis, and monthly comparisons. Advanced SUMIF, VLOOKUP, and conditional formatting throughout.</div>
+      <div class="portfolio-card-tag">XLSX · 5 Tabs</div>
+    </div>
+
+    <div class="portfolio-card reveal">
+      <div class="portfolio-card-type">Excel Dashboard</div>
+      <div class="portfolio-card-title">Monthly Budget Dashboard</div>
+      <div class="portfolio-card-desc">Small business finance tracker with budget vs actuals, variance analysis, executive summary, and colour-coded KPI indicators across 5 tabs.</div>
+      <div class="portfolio-card-tag">XLSX · 5 Tabs</div>
+    </div>
+
+    <div class="portfolio-card reveal">
+      <div class="portfolio-card-type">Excel Dashboard</div>
+      <div class="portfolio-card-title">Marketing Campaign ROI</div>
+      <div class="portfolio-card-desc">Full marketing performance tracker covering campaign data, SEO & organic metrics, and email performance analysis — all in one unified dashboard.</div>
+      <div class="portfolio-card-tag">XLSX · 5 Tabs</div>
+    </div>
+
+    <div class="portfolio-card reveal">
+      <div class="portfolio-card-type">Excel Dashboard</div>
+      <div class="portfolio-card-title">Project KPI Dashboard</div>
+      <div class="portfolio-card-desc">Agency-level project management tracker with milestone tracking, team performance metrics, and an executive summary view for client reporting.</div>
+      <div class="portfolio-card-tag">XLSX · 5 Tabs</div>
+    </div>
+
+    <div class="portfolio-card reveal">
+      <div class="portfolio-card-type">Excel Dashboard</div>
+      <div class="portfolio-card-title">HR & Employee Performance</div>
+      <div class="portfolio-card-desc">HR dashboard covering employee performance scores, compensation analysis, and recruitment pipeline tracking — built for small to mid-size teams.</div>
+      <div class="portfolio-card-tag">XLSX · 5 Tabs</div>
+    </div>
+
+    <div class="portfolio-card reveal">
+      <div class="portfolio-card-type">SEO Audit</div>
+      <div class="portfolio-card-title">Backlinko.com SEO Audit</div>
+      <div class="portfolio-card-desc">Full professional SEO audit — on-page analysis, Core Web Vitals, backlink profile, 10 prioritised issues, and a 90-day action plan. Overall score: 72/100.</div>
+      <div class="portfolio-card-tag">PDF · 5 Pages</div>
+    </div>
+
+    <div class="portfolio-card reveal">
+      <div class="portfolio-card-type">SEO Audit</div>
+      <div class="portfolio-card-title">NeilPatel.com SEO Audit</div>
+      <div class="portfolio-card-desc">Comprehensive SEO audit covering technical issues, content gaps, keyword opportunities, and backlink analysis with prioritised recommendations. Score: 69/100.</div>
+      <div class="portfolio-card-tag">PDF · 5 Pages</div>
+    </div>
+
+    <div class="portfolio-card reveal">
+      <div class="portfolio-card-type">SEO Audit</div>
+      <div class="portfolio-card-title">Ahrefs.com SEO Audit</div>
+      <div class="portfolio-card-desc">Agency-level SEO audit for a complex SaaS site — technical SEO, crawlability, schema markup, and a phased action plan for ranking improvement. Score: 81/100.</div>
+      <div class="portfolio-card-tag">PDF · 5 Pages</div>
+    </div>
+
+    <div class="portfolio-card reveal">
+      <div class="portfolio-card-type">Email Marketing</div>
+      <div class="portfolio-card-title">Email Sequences Playbook</div>
+      <div class="portfolio-card-desc">Three complete email marketing sequences for e-commerce, digital agency, and fitness coach — 36 tables, subject line frameworks, and full setup guides included.</div>
+      <div class="portfolio-card-tag">DOCX · 3 Sequences</div>
+    </div>
+
+    <div class="portfolio-card reveal">
+      <div class="portfolio-card-type">Social Media</div>
+      <div class="portfolio-card-title">Social Media Calendars</div>
+      <div class="portfolio-card-desc">Three 30-day content calendars for a restaurant (Instagram), personal finance brand (LinkedIn), and clothing store (Facebook + Instagram) — 90 posts total.</div>
+      <div class="portfolio-card-tag">XLSX · 3 Brands</div>
+    </div>
+
+    <div class="portfolio-card reveal">
+      <div class="portfolio-card-type">VA · Data Entry</div>
+      <div class="portfolio-card-title">ABC Store Expense Tracker</div>
+      <div class="portfolio-card-desc">9-tab Excel expense tracker for a retail client — Jan–Jun 2026 monthly sheets, KPI dashboard, category breakdown, and YTD analysis with 100+ transactions.</div>
+      <div class="portfolio-card-tag">XLSX · 9 Tabs</div>
+    </div>
+
+    <div class="portfolio-card reveal">
+      <div class="portfolio-card-type">VA · Data Entry</div>
+      <div class="portfolio-card-title">Product Inventory System</div>
+      <div class="portfolio-card-desc">80-SKU inventory management system with auto-flagged low stock alerts, reorder log, profit margin calculations, and supplier tracking across 4 tabs.</div>
+      <div class="portfolio-card-tag">XLSX · 4 Tabs</div>
+    </div>
+
+    <div class="portfolio-card reveal">
+      <div class="portfolio-card-type">VA · Data Cleanup</div>
+      <div class="portfolio-card-title">CRM Data Cleanup</div>
+      <div class="portfolio-card-desc">Full CRM data audit — 60+ messy contact records with duplicates, inconsistent formatting, and missing fields corrected and documented in a cleanup summary.</div>
+      <div class="portfolio-card-tag">XLSX · 3 Tabs</div>
+    </div>
+
+    <div class="portfolio-card reveal">
+      <div class="portfolio-card-type">VA · Web Research</div>
+      <div class="portfolio-card-title">Project Management Tools Report</div>
+      <div class="portfolio-card-desc">4-page professional web research report — Top 10 Project Management Tools for Remote Teams 2026. Comparison table, pricing, pros/cons, and recommendation.</div>
+      <div class="portfolio-card-tag">DOCX · 4 Pages</div>
+    </div>
+
+    <div class="portfolio-card reveal">
+      <div class="portfolio-card-type">VA · PDF Conversion</div>
+      <div class="portfolio-card-title">PDF to Excel Conversion</div>
+      <div class="portfolio-card-desc">Raw PDF invoice data extracted, cleaned, and restructured — 50+ rows with before/after transformation clearly shown and pivot-style data summary.</div>
+      <div class="portfolio-card-tag">XLSX · 3 Tabs</div>
+    </div>
+
+    <div class="portfolio-card reveal" style="display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;background:var(--bg2)">
+      <div style="font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:300;color:var(--border2);margin-bottom:1rem">+</div>
+      <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--text3)">More on request</div>
+      <div style="font-size:12px;color:var(--text3);margin-top:8px;font-weight:300">Custom deliverables<br>available on Fiverr</div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CREDENTIALS -->
+<section class="credentials-section" id="credentials">
+  <div class="section-header reveal">
+    <div class="section-num">03</div>
+    <div class="section-meta">
+      <div class="section-label">Verified credentials</div>
+      <div class="section-title">Certifications</div>
+    </div>
+  </div>
+
+  <div class="cred-grid">
+    <!-- HubSpot -->
+    <div class="cred-card reveal"><div class="cred-issuer">HubSpot Academy</div><div class="cred-name">Search Engine Optimization & Ranking Strategy</div></div>
+    <div class="cred-card reveal"><div class="cred-issuer">HubSpot Academy</div><div class="cred-name">Advanced SEO & Search Strategy</div></div>
+    <div class="cred-card reveal"><div class="cred-issuer">HubSpot Academy</div><div class="cred-name">Email Marketing Strategy & Automation</div></div>
+    <div class="cred-card reveal"><div class="cred-issuer">HubSpot Academy</div><div class="cred-name">Digital Marketing Strategy & Implementation</div></div>
+    <div class="cred-card reveal"><div class="cred-issuer">HubSpot Academy</div><div class="cred-name">Content Marketing Strategy & Execution</div></div>
+    <div class="cred-card reveal"><div class="cred-issuer">HubSpot Academy</div><div class="cred-name">Inbound Marketing Strategy & Funnel Optimization</div></div>
+    <div class="cred-card reveal"><div class="cred-issuer">HubSpot Academy</div><div class="cred-name">Advanced Social Media Marketing & Strategy</div></div>
+    <div class="cred-card reveal"><div class="cred-issuer">HubSpot Academy</div><div class="cred-name">CRM Implementation & Management</div></div>
+    <div class="cred-card reveal"><div class="cred-issuer">HubSpot Academy</div><div class="cred-name">Sales Enablement & Productivity Optimization</div></div>
+    <div class="cred-card reveal"><div class="cred-issuer">HubSpot Academy</div><div class="cred-name">Revenue Operations & Growth Strategy</div></div>
+    <div class="cred-card reveal"><div class="cred-issuer">HubSpot Academy</div><div class="cred-name">Inbound Sales Methodology & Strategy</div></div>
+    <div class="cred-card reveal"><div class="cred-issuer">HubSpot Academy</div><div class="cred-name">Data Integration & System Connectivity</div></div>
+    <!-- Google -->
+    <div class="cred-card reveal"><div class="cred-issuer">Google</div><div class="cred-name">Google Analytics Certification</div></div>
+    <div class="cred-card reveal"><div class="cred-issuer">Google</div><div class="cred-name">Conversion Rate Optimization & Growth Strategy</div></div>
+    <!-- Anthropic -->
+    <div class="cred-card reveal"><div class="cred-issuer">Anthropic</div><div class="cred-name">AI Fluency — Frameworks & Practical Foundations</div></div>
+    <div class="cred-card reveal"><div class="cred-issuer">Anthropic</div><div class="cred-name">Model Context Protocol (MCP) — Core Concepts</div></div>
+    <div class="cred-card reveal"><div class="cred-issuer">Anthropic</div><div class="cred-name">Advanced MCP Systems & Implementation</div></div>
+    <div class="cred-card reveal"><div class="cred-issuer">Anthropic</div><div class="cred-name">AI Subagent Architecture & Design</div></div>
+    <!-- Microsoft -->
+    <div class="cred-card reveal"><div class="cred-issuer">Microsoft</div><div class="cred-name">Computer Vision Application Development — Azure</div></div>
+    <div class="cred-card reveal"><div class="cred-issuer">Microsoft / Coursera</div><div class="cred-name">Machine Learning Pipeline Development with Azure</div></div>
+    <!-- Coursera -->
+    <div class="cred-card reveal"><div class="cred-issuer">Coursera</div><div class="cred-name">Microsoft Excel — Core to Advanced Foundations</div></div>
+    <div class="cred-card reveal"><div class="cred-issuer">Coursera</div><div class="cred-name">Data Analysis & Insights with Microsoft Excel</div></div>
+    <div class="cred-card reveal"><div class="cred-issuer">Coursera</div><div class="cred-name">Financial Reporting & Statement Analysis — Excel</div></div>
+    <div class="cred-card reveal"><div class="cred-issuer">Coursera</div><div class="cred-name">DCF Financial Modeling & Business Valuation</div></div>
+    <div class="cred-card reveal"><div class="cred-issuer">Coursera</div><div class="cred-name">Business Analysis & Process Optimization</div></div>
+    <div class="cred-card reveal"><div class="cred-issuer">Coursera</div><div class="cred-name">Project Planning & Work Breakdown Structure</div></div>
+    <div class="cred-card reveal"><div class="cred-issuer">Coursera</div><div class="cred-name">Agile Project Management — ClickUp</div></div>
+    <div class="cred-card reveal"><div class="cred-issuer">Coursera</div><div class="cred-name">Full Website Development with WordPress</div></div>
+    <div class="cred-card reveal"><div class="cred-issuer">Coursera</div><div class="cred-name">WordPress SEO & Organic Traffic Growth</div></div>
+    <div class="cred-card reveal"><div class="cred-issuer">Coursera</div><div class="cred-name">Python Programming Fundamentals</div></div>
+    <!-- Canva -->
+    <div class="cred-card reveal"><div class="cred-issuer">Canva</div><div class="cred-name">Graphic Design Fundamentals & Visual Communication</div></div>
+    <div class="cred-card reveal"><div class="cred-issuer">Canva</div><div class="cred-name">Digital Product Design & Creation</div></div>
+    <div class="cred-card reveal"><div class="cred-issuer">Canva</div><div class="cred-name">AI-Powered Productivity & Workflow Optimization</div></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <div class="section-header reveal">
+    <div class="section-num">04</div>
+    <div class="section-meta">
+      <div class="section-label">Work together</div>
+      <div class="section-title">Contact</div>
+    </div>
+  </div>
+
+  <div class="contact-inner reveal">
+    <div class="contact-left">
+      <h2 class="contact-headline">Let's build something <em>remarkable</em></h2>
+      <p class="contact-body">Available for freelance projects via Fiverr and Upwork. Fast turnaround, professional delivery, and clear communication throughout.</p>
+      <div class="contact-links">
+        <a href="https://www.fiverr.com/farhan712006" target="_blank" class="contact-link">
+          <span class="contact-link-label">Fiverr</span>
+          <span class="contact-link-value">fiverr.com/farhan712006 ↗</span>
+        </a>
+        <a href="https://www.upwork.com/freelancers/~019c691cadddb961dd" target="_blank" class="contact-link">
+          <span class="contact-link-label">Upwork</span>
+          <span class="contact-link-value">upwork.com/fl/farhansiddique ↗</span>
+        </a>
+        <a href="mailto:farhansiddique771@gmail.com" class="contact-link">
+          <span class="contact-link-label">Email</span>
+          <span class="contact-link-value">farhansiddique771@gmail.com ↗</span>
+        </a>
+        <a href="https://www.linkedin.com/in/farhan-sadik-siddique" target="_blank" class="contact-link">
+          <span class="contact-link-label">LinkedIn</span>
+          <span class="contact-link-value">linkedin.com/in/farhan-sadik-siddique ↗</span>
+        </a>
+      </div>
+    </div>
+    <div class="contact-right">
+      <div class="availability-block">
+        <div class="avail-label">Current Status</div>
+        <div class="avail-status">
+          <span class="avail-dot"></span>
+          Open to new projects
+        </div>
+      </div>
+      <div class="info-rows">
+        <div class="info-row">
+          <span class="info-row-key">Response Time</span>
+          <span class="info-row-val">Within 1 hour</span>
+        </div>
+        <div class="info-row">
+          <span class="info-row-key">Availability</span>
+          <span class="info-row-val">5+ hours daily</span>
+        </div>
+        <div class="info-row">
+          <span class="info-row-key">Timezone</span>
+          <span class="info-row-val">GMT+6 (Bangladesh)</span>
+        </div>
+        <div class="info-row">
+          <span class="info-row-key">Languages</span>
+          <span class="info-row-val">English · Bengali</span>
+        </div>
+        <div class="info-row">
+          <span class="info-row-key">Education</span>
+          <span class="info-row-val">BSc CSE · Data Science</span>
+        </div>
+        <div class="info-row">
+          <span class="info-row-key">Platforms</span>
+          <span class="info-row-val">Fiverr · Upwork</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Farhan Siddique · 2026</div>
+  <div class="footer-copy">Digital Marketer · Data Analyst · Freelancer</div>
+</footer>
+
+<script>
+// Cursor
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+let mx = 0, my = 0, rx = 0, ry = 0;
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+function animateCursor() {
+  rx += (mx - rx) * 0.15; ry += (my - ry) * 0.15;
+  cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
+  ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+  requestAnimationFrame(animateCursor);
+}
+animateCursor();
+document.querySelectorAll('a, button, .service-card, .portfolio-card').forEach(el => {
+  el.addEventListener('mouseenter', () => { ring.style.width = '48px'; ring.style.height = '48px'; ring.style.borderColor = 'rgba(162,155,254,0.6)'; });
+  el.addEventListener('mouseleave', () => { ring.style.width = '32px'; ring.style.height = '32px'; ring.style.borderColor = 'rgba(162,155,254,0.3)'; });
+});
+
+// Nav scroll
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 40);
+});
+
+// Scroll reveal
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 60);
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.08 });
+reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
