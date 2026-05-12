@@ -361,6 +361,29 @@ section { position: relative; z-index: 1; }
   color: var(--purple2); border-bottom: 0.5px solid var(--purple3);
   padding-bottom: 1px;
 }
+.portfolio-card-actions {
+  display: flex; gap: 8px; margin-top: 1.25rem; flex-wrap: wrap;
+}
+.btn-download {
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  border: 0.5px solid var(--border2); color: var(--purple2);
+  padding: 7px 14px; text-decoration: none;
+  transition: all 0.2s; background: transparent; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.btn-download:hover {
+  border-color: var(--purple2); background: rgba(108,92,231,0.1);
+}
+.btn-preview {
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  border: 0.5px solid var(--border); color: var(--text3);
+  padding: 7px 14px; text-decoration: none;
+  transition: all 0.2s; background: transparent;
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.btn-preview:hover { border-color: var(--text2); color: var(--text); }
 
 /* ── CREDENTIALS ── */
 .credentials-section { padding: 5rem 3rem; }
@@ -693,6 +716,10 @@ footer {
       <div class="portfolio-card-title">Sales Performance Tracker</div>
       <div class="portfolio-card-desc">Multi-tab e-commerce sales dashboard with revenue trends, product deep-dive analysis, and monthly comparisons. Advanced SUMIF, VLOOKUP, and conditional formatting throughout.</div>
       <div class="portfolio-card-tag">XLSX · 5 Tabs</div>
+      <div class="portfolio-card-actions">
+        <a href="Sales_Performance_Tracker_v2.xlsx" download class="btn-download">↓ Download</a>
+        <a href="Sales_Performance_Tracker_v2.xlsx" target="_blank" class="btn-preview">↗ View</a>
+      </div>
     </div>
 
     <div class="portfolio-card reveal">
@@ -700,6 +727,10 @@ footer {
       <div class="portfolio-card-title">Monthly Budget Dashboard</div>
       <div class="portfolio-card-desc">Small business finance tracker with budget vs actuals, variance analysis, executive summary, and colour-coded KPI indicators across 5 tabs.</div>
       <div class="portfolio-card-tag">XLSX · 5 Tabs</div>
+      <div class="portfolio-card-actions">
+        <a href="Monthly_Budget_Dashboard.xlsx" download class="btn-download">↓ Download</a>
+        <a href="Monthly_Budget_Dashboard.xlsx" target="_blank" class="btn-preview">↗ View</a>
+      </div>
     </div>
 
     <div class="portfolio-card reveal">
@@ -707,6 +738,10 @@ footer {
       <div class="portfolio-card-title">Marketing Campaign ROI</div>
       <div class="portfolio-card-desc">Full marketing performance tracker covering campaign data, SEO & organic metrics, and email performance analysis — all in one unified dashboard.</div>
       <div class="portfolio-card-tag">XLSX · 5 Tabs</div>
+      <div class="portfolio-card-actions">
+        <a href="Marketing_Campaign_ROI_v2.xlsx" download class="btn-download">↓ Download</a>
+        <a href="Marketing_Campaign_ROI_v2.xlsx" target="_blank" class="btn-preview">↗ View</a>
+      </div>
     </div>
 
     <div class="portfolio-card reveal">
@@ -714,6 +749,10 @@ footer {
       <div class="portfolio-card-title">Project KPI Dashboard</div>
       <div class="portfolio-card-desc">Agency-level project management tracker with milestone tracking, team performance metrics, and an executive summary view for client reporting.</div>
       <div class="portfolio-card-tag">XLSX · 5 Tabs</div>
+      <div class="portfolio-card-actions">
+        <a href="Project_KPI_Dashboard.xlsx" download class="btn-download">↓ Download</a>
+        <a href="Project_KPI_Dashboard.xlsx" target="_blank" class="btn-preview">↗ View</a>
+      </div>
     </div>
 
     <div class="portfolio-card reveal">
@@ -721,6 +760,10 @@ footer {
       <div class="portfolio-card-title">HR & Employee Performance</div>
       <div class="portfolio-card-desc">HR dashboard covering employee performance scores, compensation analysis, and recruitment pipeline tracking — built for small to mid-size teams.</div>
       <div class="portfolio-card-tag">XLSX · 5 Tabs</div>
+      <div class="portfolio-card-actions">
+        <a href="HR_Employee_Performance_v2.xlsx" download class="btn-download">↓ Download</a>
+        <a href="HR_Employee_Performance_v2.xlsx" target="_blank" class="btn-preview">↗ View</a>
+      </div>
     </div>
 
     <div class="portfolio-card reveal">
@@ -728,6 +771,10 @@ footer {
       <div class="portfolio-card-title">Backlinko.com SEO Audit</div>
       <div class="portfolio-card-desc">Full professional SEO audit — on-page analysis, Core Web Vitals, backlink profile, 10 prioritised issues, and a 90-day action plan. Overall score: 72/100.</div>
       <div class="portfolio-card-tag">PDF · 5 Pages</div>
+      <div class="portfolio-card-actions">
+        <a href="SEO_Audit_Backlinko_com.pdf" download class="btn-download">↓ Download</a>
+        <a href="SEO_Audit_Backlinko_com.pdf" target="_blank" class="btn-preview">↗ View</a>
+      </div>
     </div>
 
     <div class="portfolio-card reveal">
@@ -735,6 +782,10 @@ footer {
       <div class="portfolio-card-title">NeilPatel.com SEO Audit</div>
       <div class="portfolio-card-desc">Comprehensive SEO audit covering technical issues, content gaps, keyword opportunities, and backlink analysis with prioritised recommendations. Score: 69/100.</div>
       <div class="portfolio-card-tag">PDF · 5 Pages</div>
+      <div class="portfolio-card-actions">
+        <a href="SEO_Audit_NeilPatel_com.pdf" download class="btn-download">↓ Download</a>
+        <a href="SEO_Audit_NeilPatel_com.pdf" target="_blank" class="btn-preview">↗ View</a>
+      </div>
     </div>
 
     <div class="portfolio-card reveal">
@@ -742,6 +793,10 @@ footer {
       <div class="portfolio-card-title">Ahrefs.com SEO Audit</div>
       <div class="portfolio-card-desc">Agency-level SEO audit for a complex SaaS site — technical SEO, crawlability, schema markup, and a phased action plan for ranking improvement. Score: 81/100.</div>
       <div class="portfolio-card-tag">PDF · 5 Pages</div>
+      <div class="portfolio-card-actions">
+        <a href="SEO_Audit_Ahrefs_com.pdf" download class="btn-download">↓ Download</a>
+        <a href="SEO_Audit_Ahrefs_com.pdf" target="_blank" class="btn-preview">↗ View</a>
+      </div>
     </div>
 
     <div class="portfolio-card reveal">
@@ -749,6 +804,9 @@ footer {
       <div class="portfolio-card-title">Email Sequences Playbook</div>
       <div class="portfolio-card-desc">Three complete email marketing sequences for e-commerce, digital agency, and fitness coach — 36 tables, subject line frameworks, and full setup guides included.</div>
       <div class="portfolio-card-tag">DOCX · 3 Sequences</div>
+      <div class="portfolio-card-actions">
+        <a href="Email_Marketing_Sequences_Playbook.docx" download class="btn-download">↓ Download</a>
+      </div>
     </div>
 
     <div class="portfolio-card reveal">
@@ -756,6 +814,10 @@ footer {
       <div class="portfolio-card-title">Social Media Calendars</div>
       <div class="portfolio-card-desc">Three 30-day content calendars for a restaurant (Instagram), personal finance brand (LinkedIn), and clothing store (Facebook + Instagram) — 90 posts total.</div>
       <div class="portfolio-card-tag">XLSX · 3 Brands</div>
+      <div class="portfolio-card-actions">
+        <a href="Social_Media_Content_Calendars.xlsx" download class="btn-download">↓ Download</a>
+        <a href="Social_Media_Content_Calendars.xlsx" target="_blank" class="btn-preview">↗ View</a>
+      </div>
     </div>
 
     <div class="portfolio-card reveal">
@@ -763,6 +825,10 @@ footer {
       <div class="portfolio-card-title">ABC Store Expense Tracker</div>
       <div class="portfolio-card-desc">9-tab Excel expense tracker for a retail client — Jan–Jun 2026 monthly sheets, KPI dashboard, category breakdown, and YTD analysis with 100+ transactions.</div>
       <div class="portfolio-card-tag">XLSX · 9 Tabs</div>
+      <div class="portfolio-card-actions">
+        <a href="ABC_Store_Expense_Tracker.xlsx" download class="btn-download">↓ Download</a>
+        <a href="ABC_Store_Expense_Tracker.xlsx" target="_blank" class="btn-preview">↗ View</a>
+      </div>
     </div>
 
     <div class="portfolio-card reveal">
@@ -770,6 +836,10 @@ footer {
       <div class="portfolio-card-title">Product Inventory System</div>
       <div class="portfolio-card-desc">80-SKU inventory management system with auto-flagged low stock alerts, reorder log, profit margin calculations, and supplier tracking across 4 tabs.</div>
       <div class="portfolio-card-tag">XLSX · 4 Tabs</div>
+      <div class="portfolio-card-actions">
+        <a href="ABC_Store_Product_Inventory.xlsx" download class="btn-download">↓ Download</a>
+        <a href="ABC_Store_Product_Inventory.xlsx" target="_blank" class="btn-preview">↗ View</a>
+      </div>
     </div>
 
     <div class="portfolio-card reveal">
@@ -777,6 +847,10 @@ footer {
       <div class="portfolio-card-title">CRM Data Cleanup</div>
       <div class="portfolio-card-desc">Full CRM data audit — 60+ messy contact records with duplicates, inconsistent formatting, and missing fields corrected and documented in a cleanup summary.</div>
       <div class="portfolio-card-tag">XLSX · 3 Tabs</div>
+      <div class="portfolio-card-actions">
+        <a href="ClientB_CRM_Data_Cleanup.xlsx" download class="btn-download">↓ Download</a>
+        <a href="ClientB_CRM_Data_Cleanup.xlsx" target="_blank" class="btn-preview">↗ View</a>
+      </div>
     </div>
 
     <div class="portfolio-card reveal">
@@ -784,6 +858,9 @@ footer {
       <div class="portfolio-card-title">Project Management Tools Report</div>
       <div class="portfolio-card-desc">4-page professional web research report — Top 10 Project Management Tools for Remote Teams 2026. Comparison table, pricing, pros/cons, and recommendation.</div>
       <div class="portfolio-card-tag">DOCX · 4 Pages</div>
+      <div class="portfolio-card-actions">
+        <a href="ClientA_Web_Research_Report.docx" download class="btn-download">↓ Download</a>
+      </div>
     </div>
 
     <div class="portfolio-card reveal">
@@ -791,6 +868,10 @@ footer {
       <div class="portfolio-card-title">PDF to Excel Conversion</div>
       <div class="portfolio-card-desc">Raw PDF invoice data extracted, cleaned, and restructured — 50+ rows with before/after transformation clearly shown and pivot-style data summary.</div>
       <div class="portfolio-card-tag">XLSX · 3 Tabs</div>
+      <div class="portfolio-card-actions">
+        <a href="XYZ_Ltd_PDF_to_Excel_Conversion.xlsx" download class="btn-download">↓ Download</a>
+        <a href="XYZ_Ltd_PDF_to_Excel_Conversion.xlsx" target="_blank" class="btn-preview">↗ View</a>
+      </div>
     </div>
 
     <div class="portfolio-card reveal" style="display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;background:var(--bg2)">
