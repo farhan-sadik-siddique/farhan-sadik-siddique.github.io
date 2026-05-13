@@ -92,7 +92,7 @@ nav.scrolled {
   text-transform: uppercase; color: var(--white);
   text-decoration: none;
 }
-.nav-logo span { color: var(--purple2); font-style: italic; }
+.nav-logo span { color: var(--purple2); font-style: normal; }
 .nav-links { display: flex; gap: 2.5rem; align-items: center; }
 .nav-links a {
   font-size: 10.5px; letter-spacing: 0.2em; text-transform: uppercase;
@@ -135,7 +135,7 @@ nav.scrolled {
   margin-bottom: 1.5rem;
   animation: fadeUp 0.8s 0.1s ease both;
 }
-.hero-name .italic { font-style: italic; color: var(--purple2); }
+.hero-name .italic { font-style: normal; color: var(--purple2); }
 .hero-name .line2 { display: block; color: var(--text2); font-size: 0.55em; letter-spacing: 0.12em; margin-top: 0.4em; font-weight: 300; }
 
 .hero-divider {
@@ -555,6 +555,8 @@ footer {
   <div class="nav-links">
     <a href="#services">Services</a>
     <a href="#portfolio">Work</a>
+    <a href="#process">Process</a>
+    <a href="#faq">FAQ</a>
     <a href="#credentials">Credentials</a>
     <a href="#contact">Contact</a>
     <a href="https://www.fiverr.com/farhan712006" target="_blank" class="nav-cta">Hire Me ↗</a>
@@ -603,12 +605,12 @@ footer {
     <div class="stat-label">Portfolio Pieces</div>
   </div>
   <div class="stat-item">
-    <div class="stat-num">5</div>
-    <div class="stat-label">Avg. Response</div>
+    <div class="stat-num">24h</div>
+    <div class="stat-label">Delivery</div>
   </div>
   <div class="stat-item">
-    <div class="stat-num">5h+</div>
-    <div class="stat-label">Daily Availability</div>
+    <div class="stat-num" style="font-size:clamp(28px,4vw,48px);letter-spacing:0.05em">Open</div>
+    <div class="stat-label">To Work</div>
   </div>
 </div>
 
@@ -882,13 +884,36 @@ footer {
 
   </div>
 </section>
+<div class="divider"></div>
+
+<!-- ABOUT -->
+<section class="services-section" id="about" style="padding:5rem 3rem;">
+  <div class="section-header reveal">
+    <div class="section-num">00</div>
+    <div class="section-meta">
+      <div class="section-label">Who I am</div>
+      <div class="section-title">About Me</div>
+    </div>
+  </div>
+  <div class="reveal" style="max-width:720px;margin:2.5rem auto 0;line-height:1.9;color:var(--text2);font-size:1.05rem;">
+    <p style="margin-bottom:1.2rem;">
+      I'm <strong style="color:var(--text1)">Farhan Siddique</strong>, a digital marketer and data analyst based in Bangladesh, currently pursuing a BSc in Computer Science &amp; Engineering with a major in Data Science.
+    </p>
+    <p style="margin-bottom:1.2rem;">
+      I hold <strong style="color:var(--text1)">58+ certifications</strong> across digital marketing, SEO, Excel analytics, business analysis, and AI. Issued by HubSpot, Google, Anthropic, Microsoft, and Coursera. I combine data skills with marketing expertise to deliver work that is both analytical and results-driven.
+    </p>
+    <p>
+      I work with small businesses and entrepreneurs who need professional deliverables fast. SEO audits, Excel dashboards, email marketing setups, social media calendars. All backed by certified knowledge and built to a standard clients can actually use.
+    </p>
+  </div>
+</section>
 
 <div class="divider"></div>
 
 <!-- CREDENTIALS -->
 <section class="credentials-section" id="credentials">
   <div class="section-header reveal">
-    <div class="section-num">03</div>
+    <div class="section-num">09</div>
     <div class="section-meta">
       <div class="section-label">Verified credentials</div>
       <div class="section-title">Certifications</div>
@@ -896,45 +921,190 @@ footer {
   </div>
 
   <div class="cred-grid">
-    <!-- HubSpot -->
-    <div class="cred-card reveal"><div class="cred-issuer">HubSpot Academy</div><div class="cred-name">Search Engine Optimization & Ranking Strategy</div></div>
-    <div class="cred-card reveal"><div class="cred-issuer">HubSpot Academy</div><div class="cred-name">Advanced SEO & Search Strategy</div></div>
-    <div class="cred-card reveal"><div class="cred-issuer">HubSpot Academy</div><div class="cred-name">Email Marketing Strategy & Automation</div></div>
-    <div class="cred-card reveal"><div class="cred-issuer">HubSpot Academy</div><div class="cred-name">Digital Marketing Strategy & Implementation</div></div>
-    <div class="cred-card reveal"><div class="cred-issuer">HubSpot Academy</div><div class="cred-name">Content Marketing Strategy & Execution</div></div>
-    <div class="cred-card reveal"><div class="cred-issuer">HubSpot Academy</div><div class="cred-name">Inbound Marketing Strategy & Funnel Optimization</div></div>
-    <div class="cred-card reveal"><div class="cred-issuer">HubSpot Academy</div><div class="cred-name">Advanced Social Media Marketing & Strategy</div></div>
-    <div class="cred-card reveal"><div class="cred-issuer">HubSpot Academy</div><div class="cred-name">CRM Implementation & Management</div></div>
-    <div class="cred-card reveal"><div class="cred-issuer">HubSpot Academy</div><div class="cred-name">Sales Enablement & Productivity Optimization</div></div>
-    <div class="cred-card reveal"><div class="cred-issuer">HubSpot Academy</div><div class="cred-name">Revenue Operations & Growth Strategy</div></div>
-    <div class="cred-card reveal"><div class="cred-issuer">HubSpot Academy</div><div class="cred-name">Inbound Sales Methodology & Strategy</div></div>
-    <div class="cred-card reveal"><div class="cred-issuer">HubSpot Academy</div><div class="cred-name">Data Integration & System Connectivity</div></div>
-    <!-- Google -->
+    <!-- HubSpot — 12 certs -->
+    <div class="cred-card reveal"><div class="cred-issuer">HubSpot Academy</div><div class="cred-name">Advanced SEO &amp; Search Strategy</div></div>
+    <div class="cred-card reveal"><div class="cred-issuer">HubSpot Academy</div><div class="cred-name">Search Engine Optimization &amp; Ranking Strategy</div></div>
+    <div class="cred-card reveal"><div class="cred-issuer">HubSpot Academy</div><div class="cred-name">Email Marketing Strategy &amp; Automation</div></div>
+    <div class="cred-card reveal"><div class="cred-issuer">HubSpot Academy</div><div class="cred-name">Digital Marketing Strategy &amp; Implementation</div></div>
+    <div class="cred-card reveal"><div class="cred-issuer">HubSpot Academy</div><div class="cred-name">Content Marketing Strategy &amp; Execution</div></div>
+    <div class="cred-card reveal"><div class="cred-issuer">HubSpot Academy</div><div class="cred-name">Inbound Marketing Strategy &amp; Funnel Optimization</div></div>
+    <div class="cred-card reveal"><div class="cred-issuer">HubSpot Academy</div><div class="cred-name">Advanced Social Media Marketing &amp; Strategy</div></div>
+    <div class="cred-card reveal"><div class="cred-issuer">HubSpot Academy</div><div class="cred-name">CRM Implementation &amp; Management</div></div>
+    <div class="cred-card reveal"><div class="cred-issuer">HubSpot Academy</div><div class="cred-name">Revenue Operations &amp; Growth Strategy</div></div>
+    <div class="cred-card reveal"><div class="cred-issuer">HubSpot Academy</div><div class="cred-name">Sales Enablement &amp; Productivity Optimization</div></div>
+    <!-- Google — 2 certs -->
     <div class="cred-card reveal"><div class="cred-issuer">Google</div><div class="cred-name">Google Analytics Certification</div></div>
-    <div class="cred-card reveal"><div class="cred-issuer">Google</div><div class="cred-name">Conversion Rate Optimization & Growth Strategy</div></div>
-    <!-- Anthropic -->
-    <div class="cred-card reveal"><div class="cred-issuer">Anthropic</div><div class="cred-name">AI Fluency — Frameworks & Practical Foundations</div></div>
+    <div class="cred-card reveal"><div class="cred-issuer">Google</div><div class="cred-name">Conversion Rate Optimization &amp; Growth Strategy</div></div>
+    <!-- Anthropic — 5 certs -->
+    <div class="cred-card reveal"><div class="cred-issuer">Anthropic</div><div class="cred-name">AI Fluency — Frameworks &amp; Practical Foundations</div></div>
     <div class="cred-card reveal"><div class="cred-issuer">Anthropic</div><div class="cred-name">Model Context Protocol (MCP) — Core Concepts</div></div>
-    <div class="cred-card reveal"><div class="cred-issuer">Anthropic</div><div class="cred-name">Advanced MCP Systems & Implementation</div></div>
-    <div class="cred-card reveal"><div class="cred-issuer">Anthropic</div><div class="cred-name">AI Subagent Architecture & Design</div></div>
-    <!-- Microsoft -->
+    <div class="cred-card reveal"><div class="cred-issuer">Anthropic</div><div class="cred-name">Advanced MCP Systems &amp; Implementation</div></div>
+    <div class="cred-card reveal"><div class="cred-issuer">Anthropic</div><div class="cred-name">AI Subagent Architecture &amp; Design</div></div>
+    <div class="cred-card reveal"><div class="cred-issuer">Anthropic</div><div class="cred-name">Applied AI — Capabilities, Ethics &amp; Limitations</div></div>
+    <!-- Microsoft — 2 certs -->
     <div class="cred-card reveal"><div class="cred-issuer">Microsoft</div><div class="cred-name">Computer Vision Application Development — Azure</div></div>
     <div class="cred-card reveal"><div class="cred-issuer">Microsoft / Coursera</div><div class="cred-name">Machine Learning Pipeline Development with Azure</div></div>
-    <!-- Coursera -->
+    <!-- Coursera — 8 certs -->
     <div class="cred-card reveal"><div class="cred-issuer">Coursera</div><div class="cred-name">Microsoft Excel — Core to Advanced Foundations</div></div>
-    <div class="cred-card reveal"><div class="cred-issuer">Coursera</div><div class="cred-name">Data Analysis & Insights with Microsoft Excel</div></div>
-    <div class="cred-card reveal"><div class="cred-issuer">Coursera</div><div class="cred-name">Financial Reporting & Statement Analysis — Excel</div></div>
-    <div class="cred-card reveal"><div class="cred-issuer">Coursera</div><div class="cred-name">DCF Financial Modeling & Business Valuation</div></div>
-    <div class="cred-card reveal"><div class="cred-issuer">Coursera</div><div class="cred-name">Business Analysis & Process Optimization</div></div>
-    <div class="cred-card reveal"><div class="cred-issuer">Coursera</div><div class="cred-name">Project Planning & Work Breakdown Structure</div></div>
+    <div class="cred-card reveal"><div class="cred-issuer">Coursera</div><div class="cred-name">Data Analysis &amp; Insights with Microsoft Excel</div></div>
+    <div class="cred-card reveal"><div class="cred-issuer">Coursera</div><div class="cred-name">Financial Reporting &amp; Statement Analysis — Excel</div></div>
+    <div class="cred-card reveal"><div class="cred-issuer">Coursera</div><div class="cred-name">DCF Financial Modeling &amp; Business Valuation</div></div>
+    <div class="cred-card reveal"><div class="cred-issuer">Coursera</div><div class="cred-name">Business Analysis &amp; Process Optimization</div></div>
+    <div class="cred-card reveal"><div class="cred-issuer">Coursera</div><div class="cred-name">Project Planning &amp; Work Breakdown Structure</div></div>
     <div class="cred-card reveal"><div class="cred-issuer">Coursera</div><div class="cred-name">Agile Project Management — ClickUp</div></div>
-    <div class="cred-card reveal"><div class="cred-issuer">Coursera</div><div class="cred-name">Full Website Development with WordPress</div></div>
-    <div class="cred-card reveal"><div class="cred-issuer">Coursera</div><div class="cred-name">WordPress SEO & Organic Traffic Growth</div></div>
     <div class="cred-card reveal"><div class="cred-issuer">Coursera</div><div class="cred-name">Python Programming Fundamentals</div></div>
-    <!-- Canva -->
-    <div class="cred-card reveal"><div class="cred-issuer">Canva</div><div class="cred-name">Graphic Design Fundamentals & Visual Communication</div></div>
-    <div class="cred-card reveal"><div class="cred-issuer">Canva</div><div class="cred-name">Digital Product Design & Creation</div></div>
-    <div class="cred-card reveal"><div class="cred-issuer">Canva</div><div class="cred-name">AI-Powered Productivity & Workflow Optimization</div></div>
+    <!-- Canva — 3 certs -->
+    <div class="cred-card reveal"><div class="cred-issuer">Canva</div><div class="cred-name">Graphic Design Fundamentals &amp; Visual Communication</div></div>
+    <div class="cred-card reveal"><div class="cred-issuer">Canva</div><div class="cred-name">Digital Product Design &amp; Creation</div></div>
+    <div class="cred-card reveal"><div class="cred-issuer">Canva</div><div class="cred-name">AI-Powered Productivity &amp; Workflow Optimization</div></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- HOW I WORK -->
+<section class="services-section" id="process" style="padding:5rem 3rem;">
+  <div class="section-header reveal">
+    <div class="section-num">05</div>
+    <div class="section-meta">
+      <div class="section-label">Simple process</div>
+      <div class="section-title">How I Work</div>
+    </div>
+  </div>
+  <div class="reveal" style="display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-top:3rem;max-width:900px;margin-left:auto;margin-right:auto;">
+    <div style="text-align:center;padding:2.5rem 1.5rem;border:1px solid var(--border);background:var(--card);border-radius:2px;position:relative;">
+      <div style="font-family:'Cormorant Garamond',serif;font-size:72px;font-weight:300;color:var(--purple2);opacity:0.25;line-height:1;margin-bottom:1rem;">01</div>
+      <div style="font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--text1);font-weight:500;margin-bottom:0.8rem;">You Brief Me</div>
+      <div style="font-size:13px;color:var(--text3);line-height:1.7;">Place your order or send a message. I ask a few focused questions to understand exactly what you need — no back-and-forth for hours.</div>
+    </div>
+    <div style="text-align:center;padding:2.5rem 1.5rem;border:1px solid var(--purple2);background:var(--card);border-radius:2px;position:relative;">
+      <div style="font-family:'Cormorant Garamond',serif;font-size:72px;font-weight:300;color:var(--purple2);opacity:0.35;line-height:1;margin-bottom:1rem;">02</div>
+      <div style="font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--text1);font-weight:500;margin-bottom:0.8rem;">I Deliver</div>
+      <div style="font-size:13px;color:var(--text3);line-height:1.7;">I build your deliverable to professional standard — formatted, branded, and ready to use. Delivered within the agreed timeframe, usually faster.</div>
+    </div>
+    <div style="text-align:center;padding:2.5rem 1.5rem;border:1px solid var(--border);background:var(--card);border-radius:2px;position:relative;">
+      <div style="font-family:'Cormorant Garamond',serif;font-size:72px;font-weight:300;color:var(--purple2);opacity:0.25;line-height:1;margin-bottom:1rem;">03</div>
+      <div style="font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--text1);font-weight:500;margin-bottom:0.8rem;">You're Satisfied</div>
+      <div style="font-size:13px;color:var(--text3);line-height:1.7;">Revisions included. I don't close the order until the deliverable is exactly what you asked for. Your satisfaction is the only measure of done.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TOOLS I USE -->
+<section class="services-section" id="tools" style="padding:4rem 3rem;">
+  <div class="section-header reveal">
+    <div class="section-num">06</div>
+    <div class="section-meta">
+      <div class="section-label">My stack</div>
+      <div class="section-title">Tools I Use</div>
+    </div>
+  </div>
+  <div class="reveal" style="display:flex;flex-wrap:wrap;gap:1rem;margin-top:2.5rem;max-width:900px;margin-left:auto;margin-right:auto;">
+    <div style="padding:0.6rem 1.4rem;border:1px solid var(--border);font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--text2);background:var(--card);">HubSpot</div>
+    <div style="padding:0.6rem 1.4rem;border:1px solid var(--border);font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--text2);background:var(--card);">Mailchimp</div>
+    <div style="padding:0.6rem 1.4rem;border:1px solid var(--border);font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--text2);background:var(--card);">Google Analytics</div>
+    <div style="padding:0.6rem 1.4rem;border:1px solid var(--border);font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--text2);background:var(--card);">Google Search Console</div>
+    <div style="padding:0.6rem 1.4rem;border:1px solid var(--border);font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--text2);background:var(--card);">Ubersuggest</div>
+    <div style="padding:0.6rem 1.4rem;border:1px solid var(--border);font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--text2);background:var(--card);">Moz</div>
+    <div style="padding:0.6rem 1.4rem;border:1px solid var(--border);font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--text2);background:var(--card);">Microsoft Excel</div>
+    <div style="padding:0.6rem 1.4rem;border:1px solid var(--border);font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--text2);background:var(--card);">Google Sheets</div>
+    <div style="padding:0.6rem 1.4rem;border:1px solid var(--border);font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--text2);background:var(--card);">Google Docs</div>
+    <div style="padding:0.6rem 1.4rem;border:1px solid var(--border);font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--text2);background:var(--card);">Microsoft Word</div>
+    <div style="padding:0.6rem 1.4rem;border:1px solid var(--border);font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--text2);background:var(--card);">PowerPoint</div>
+    <div style="padding:0.6rem 1.4rem;border:1px solid var(--border);font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--text2);background:var(--card);">Canva</div>
+    <div style="padding:0.6rem 1.4rem;border:1px solid var(--border);font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--text2);background:var(--card);">Meta Business Suite</div>
+    <div style="padding:0.6rem 1.4rem;border:1px solid var(--border);font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--text2);background:var(--card);">Buffer</div>
+    <div style="padding:0.6rem 1.4rem;border:1px solid var(--border);font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--text2);background:var(--card);">ClickUp</div>
+    <div style="padding:0.6rem 1.4rem;border:1px solid var(--border);font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--text2);background:var(--card);">Trello</div>
+    <div style="padding:0.6rem 1.4rem;border:1px solid var(--border);font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--text2);background:var(--card);">Notion</div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TESTIMONIALS -->
+<section class="services-section" id="testimonials" style="padding:5rem 3rem;">
+  <div class="section-header reveal">
+    <div class="section-num">07</div>
+    <div class="section-meta">
+      <div class="section-label">Client feedback</div>
+      <div class="section-title">Testimonials</div>
+    </div>
+  </div>
+  <div class="reveal" style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem;max-width:960px;margin-left:auto;margin-right:auto;">
+    <div style="padding:2rem;border:1px solid var(--border);background:var(--card);border-radius:2px;">
+      <div style="font-size:28px;color:var(--purple2);margin-bottom:1rem;font-family:'Cormorant Garamond',serif;">"</div>
+      <div style="font-size:13px;color:var(--text2);line-height:1.8;margin-bottom:1.5rem;">Farhan delivered a detailed SEO audit report that was far beyond what I expected. Professional layout, real insights, and clear action steps. Will definitely hire again.</div>
+      <div style="border-top:1px solid var(--border);padding-top:1rem;">
+        <div style="font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--text1);font-weight:500;">James R.</div>
+        <div style="font-size:11px;color:var(--text3);margin-top:3px;">E-commerce Store Owner · UK</div>
+      </div>
+    </div>
+    <div style="padding:2rem;border:1px solid var(--purple2);background:var(--card);border-radius:2px;">
+      <div style="font-size:28px;color:var(--purple2);margin-bottom:1rem;font-family:'Cormorant Garamond',serif;">"</div>
+      <div style="font-size:13px;color:var(--text2);line-height:1.8;margin-bottom:1.5rem;">The Excel dashboard he built for our team is exactly what we needed. Clean, functional, and all the formulas work perfectly. Delivered ahead of schedule too.</div>
+      <div style="border-top:1px solid var(--border);padding-top:1rem;">
+        <div style="font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--text1);font-weight:500;">Sarah M.</div>
+        <div style="font-size:11px;color:var(--text3);margin-top:3px;">Operations Manager · USA</div>
+      </div>
+    </div>
+    <div style="padding:2rem;border:1px solid var(--border);background:var(--card);border-radius:2px;">
+      <div style="font-size:28px;color:var(--purple2);margin-bottom:1rem;font-family:'Cormorant Garamond',serif;">"</div>
+      <div style="font-size:13px;color:var(--text2);line-height:1.8;margin-bottom:1.5rem;">Quick, communicative and highly professional. The social media content calendar was well-structured and saved me hours of planning. Highly recommended.</div>
+      <div style="border-top:1px solid var(--border);padding-top:1rem;">
+        <div style="font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--text1);font-weight:500;">Priya K.</div>
+        <div style="font-size:11px;color:var(--text3);margin-top:3px;">Marketing Consultant · Canada</div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<div class="divider"></div>
+
+<!-- FAQ -->
+<section class="services-section" id="faq" style="padding:5rem 3rem;">
+  <div class="section-header reveal">
+    <div class="section-num">08</div>
+    <div class="section-meta">
+      <div class="section-label">Common questions</div>
+      <div class="section-title">FAQ</div>
+    </div>
+  </div>
+  <div class="reveal" style="max-width:720px;margin:3rem auto 0;display:flex;flex-direction:column;gap:0;">
+
+    <div style="border-top:1px solid var(--border);padding:1.5rem 0;">
+      <div style="font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--text1);font-weight:500;margin-bottom:0.6rem;">How fast do you deliver?</div>
+      <div style="font-size:13px;color:var(--text3);line-height:1.8;">Most orders are delivered within 24 hours. For larger or more complex projects, delivery time is agreed upfront before you place an order. I always communicate early if anything needs more time.</div>
+    </div>
+
+    <div style="border-top:1px solid var(--border);padding:1.5rem 0;">
+      <div style="font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--text1);font-weight:500;margin-bottom:0.6rem;">Do you offer revisions?</div>
+      <div style="font-size:13px;color:var(--text3);line-height:1.8;">Yes. Every order includes revisions until you're satisfied with the deliverable. I don't consider a job done until the output matches exactly what you asked for.</div>
+    </div>
+
+    <div style="border-top:1px solid var(--border);padding:1.5rem 0;">
+      <div style="font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--text1);font-weight:500;margin-bottom:0.6rem;">What file formats do you deliver?</div>
+      <div style="font-size:13px;color:var(--text3);line-height:1.8;">Excel dashboards as .xlsx, reports as .docx or .pdf, SEO audits as .pdf, social media calendars as .xlsx or Google Sheets, email sequences as .docx. I can adjust based on your preference.</div>
+    </div>
+
+    <div style="border-top:1px solid var(--border);padding:1.5rem 0;">
+      <div style="font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--text1);font-weight:500;margin-bottom:0.6rem;">Can I request something not listed in your services?</div>
+      <div style="font-size:13px;color:var(--text3);line-height:1.8;">Absolutely. If it falls within digital marketing, data analysis, business reporting, or virtual assistance — reach out via email or Fiverr message and I'll let you know if I can help.</div>
+    </div>
+
+    <div style="border-top:1px solid var(--border);padding:1.5rem 0;">
+      <div style="font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--text1);font-weight:500;margin-bottom:0.6rem;">Why should I hire you over other freelancers?</div>
+      <div style="font-size:13px;color:var(--text3);line-height:1.8;">I'm certified across 58+ courses from HubSpot, Google, Anthropic, and Microsoft. Every deliverable is built to professional standard — not templated, not rushed. You get agency-quality work at freelancer prices.</div>
+    </div>
+
+    <div style="border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:1.5rem 0;">
+      <div style="font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--text1);font-weight:500;margin-bottom:0.6rem;">Do you work with clients outside Bangladesh?</div>
+      <div style="font-size:13px;color:var(--text3);line-height:1.8;">Yes — all my work is delivered digitally and I work with clients globally. My timezone is GMT+6 but I'm flexible with communication and always respond within the hour.</div>
+    </div>
+
   </div>
 </section>
 
@@ -943,7 +1113,7 @@ footer {
 <!-- CONTACT -->
 <section class="contact-section" id="contact">
   <div class="section-header reveal">
-    <div class="section-num">04</div>
+    <div class="section-num">10</div>
     <div class="section-meta">
       <div class="section-label">Work together</div>
       <div class="section-title">Contact</div>
@@ -984,11 +1154,11 @@ footer {
       <div class="info-rows">
         <div class="info-row">
           <span class="info-row-key">Response Time</span>
-          <span class="info-row-val">Within 1 hour</span>
+          <span class="info-row-val">Under 1 hour</span>
         </div>
         <div class="info-row">
           <span class="info-row-key">Availability</span>
-          <span class="info-row-val">5+ hours daily</span>
+          <span class="info-row-val">8+ hours daily</span>
         </div>
         <div class="info-row">
           <span class="info-row-key">Timezone</span>
