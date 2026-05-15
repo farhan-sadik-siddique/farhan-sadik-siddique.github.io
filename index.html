@@ -259,11 +259,17 @@ section { position: relative; z-index: 1; }
 .services-section { padding: 5rem 3rem; }
 
 .services-grid {
-  display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: auto auto auto auto;
+  gap: 1px;
   background: var(--border);
 }
 .service-card {
-  background: var(--bg); padding: 3rem 2.5rem;
+  grid-row: span 4;
+  display: grid;
+  grid-template-rows: subgrid;
+  background: var(--bg);
   position: relative; overflow: hidden;
   transition: background 0.3s;
 }
@@ -557,6 +563,7 @@ footer {
     <a href="#portfolio">Work</a>
     <a href="#process">Process</a>
     <a href="#faq">FAQ</a>
+    <a href="#about">About</a>
     <a href="#credentials">Credentials</a>
     <a href="#contact">Contact</a>
     <a href="https://www.fiverr.com/farhan712006" target="_blank" class="nav-cta">Hire Me ↗</a>
@@ -572,15 +579,15 @@ footer {
   </h1>
   <div class="hero-divider"></div>
   <p class="hero-desc">
-    HubSpot & Google certified. Specializing in SEO, email marketing, Excel dashboards, and AI-powered workflows for businesses that want measurable results.
+    HubSpot & Google certified. Specializing in SEO, email marketing, social media calendars, and data-driven VA services for businesses that want measurable results.
   </p>
   <div class="hero-tags">
     <span class="tag">SEO Audits</span>
     <span class="tag">Email Marketing</span>
-    <span class="tag">Excel Dashboards</span>
     <span class="tag">Social Media</span>
     
     <span class="tag">Business Analysis</span>
+    <span class="tag">VA &amp; Data Entry</span>
   </div>
   <div class="hero-btns">
     <a href="https://www.fiverr.com/farhan712006" target="_blank" class="btn-primary">Hire on Fiverr ↗</a>
@@ -601,7 +608,7 @@ footer {
     <div class="stat-label">Certifications</div>
   </div>
   <div class="stat-item">
-    <div class="stat-num">19</div>
+    <div class="stat-num">20</div>
     <div class="stat-label">Portfolio Pieces</div>
   </div>
   <div class="stat-item">
@@ -622,79 +629,403 @@ footer {
     <div class="section-num">01</div>
     <div class="section-meta">
       <div class="section-label">What I deliver</div>
-      <div class="section-title">Services</div>
+      <div class="section-title">Services & Pricing</div>
     </div>
   </div>
 
+  <style>
+    /* ══ SERVICES SUBGRID LAYOUT ══════════════════════════════════════════════
+       The services-grid is 2 cols × 5 rows:
+         row 1 = card header (num + badge + title + desc)
+         row 2 = BASIC tier
+         row 3 = STANDARD tier
+         row 4 = PREMIUM tier
+         row 5 = bottom border spacer
+       Each service-card spans all 5 rows with grid-row: subgrid so its
+       internal children are placed into the shared row tracks — guaranteeing
+       Basic/Standard/Premium align across both columns with zero JS.
+    ═══════════════════════════════════════════════════════════════════════════ */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      /* 5 explicit row tracks per "pair" — auto for header, then 3 tier rows */
+      grid-template-rows: auto auto auto auto;
+      gap: 1px;
+      background: var(--border);
+    }
+    /* Each card spans 4 rows and uses subgrid for its own row children */
+    .service-card {
+      grid-row: span 4;
+      display: grid;
+      grid-template-rows: subgrid;
+      background: var(--bg);
+      padding: 0;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s;
+    }
+    .service-card:hover { background: var(--bg2); }
+    .service-card::before {
+      content: ''; position: absolute; top: 0; left: 0;
+      width: 3px; height: 0; background: var(--purple);
+      transition: height 0.4s ease;
+    }
+    .service-card:hover::before { height: 100%; }
+    /* Header block — occupies row 1 */
+    .sc-header {
+      padding: 3rem 2.5rem 1.5rem;
+    }
+    .service-card-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 11px; color: var(--text3); letter-spacing: 0.2em;
+      margin-bottom: 1.5rem; font-style: italic;
+    }
+    .service-badge {
+      font-family: 'DM Mono', monospace; font-size: 8.5px;
+      letter-spacing: 0.25em; text-transform: uppercase;
+      background: rgba(108,92,231,0.12); border: 0.5px solid var(--purple3);
+      color: var(--purple2); padding: 4px 12px; display: inline-block;
+      margin-bottom: 1.5rem;
+    }
+    .service-card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px; font-weight: 400; color: var(--white);
+      letter-spacing: 0.04em; margin-bottom: 1rem;
+    }
+    .service-card-desc {
+      font-size: 13px; color: var(--text2); line-height: 1.9;
+      font-weight: 300;
+    }
+    /* Tier rows — occupy rows 2, 3, 4 respectively */
+    .tier-row {
+      display: grid;
+      grid-template-columns: 70px 1fr 110px;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 1.25rem 2.5rem;
+      border-top: 0.5px solid var(--border);
+    }
+    .tier-label-col {
+      font-family: 'DM Mono', monospace; font-size: 8.5px;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--text3);
+    }
+    .tier-desc-line {
+      font-size: 11.5px; color: var(--text2); line-height: 1.7;
+      font-weight: 300; margin-bottom: 0.6rem;
+    }
+    .tier-features-inline {
+      display: flex; flex-wrap: wrap; gap: 4px;
+    }
+    .tier-feat-tag {
+      font-family: 'DM Mono', monospace; font-size: 8px;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--text3); border: 0.5px solid var(--border);
+      padding: 3px 8px;
+    }
+    .tier-price-col { text-align: right; }
+    .tier-price-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 32px; font-weight: 300; line-height: 1;
+      background: linear-gradient(135deg, #e8d5ff 0%, #a29bfe 45%, #c8b8ff 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 10px rgba(162,155,254,0.55));
+      letter-spacing: -0.01em;
+    }
+    .tier-order-btns {
+      display: flex; gap: 4px; margin-top: 8px; justify-content: flex-end;
+    }
+    .btn-f {
+      font-family: 'DM Mono', monospace; font-size: 7.5px;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 5px 10px; text-decoration: none;
+      background: rgba(0,230,118,0.07); border: 0.5px solid rgba(0,230,118,0.5);
+      color: #00e676;
+      text-shadow: 0 0 10px rgba(0,230,118,0.9);
+      box-shadow: 0 0 10px rgba(0,230,118,0.1), inset 0 0 8px rgba(0,230,118,0.04);
+      transition: background 0.2s, box-shadow 0.2s; white-space: nowrap;
+    }
+    .btn-f:hover { background: rgba(0,230,118,0.13); box-shadow: 0 0 18px rgba(0,230,118,0.25); }
+    .btn-u {
+      font-family: 'DM Mono', monospace; font-size: 7.5px;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 5px 10px; text-decoration: none;
+      background: rgba(0,212,255,0.06); border: 0.5px solid rgba(0,212,255,0.5);
+      color: #00d4ff;
+      text-shadow: 0 0 10px rgba(0,212,255,0.95);
+      box-shadow: 0 0 10px rgba(0,212,255,0.1), inset 0 0 8px rgba(0,212,255,0.04);
+      transition: background 0.2s, box-shadow 0.2s; white-space: nowrap;
+    }
+    .btn-u:hover { background: rgba(0,212,255,0.12); box-shadow: 0 0 18px rgba(0,212,255,0.25); }
+    @media (max-width: 768px) {
+      .services-grid { grid-template-columns: 1fr; grid-template-rows: unset; }
+      .service-card { grid-row: span 1; display: block; padding: 2.5rem 1.5rem; }
+      .sc-header { padding: 0 0 1.5rem; }
+      .tier-row { grid-template-columns: 1fr; gap: 0.75rem; padding: 1rem 0; }
+      .tier-price-col { text-align: left; }
+      .tier-order-btns { justify-content: flex-start; }
+    }
+  </style>
+
   <div class="services-grid">
 
+    <!-- GIG 001: SEO AUDIT ── header row -->
     <div class="service-card reveal">
-      <div class="service-card-num">Service · 001</div>
-      <div class="service-badge">Most Popular</div>
-      <div class="service-card-title">SEO Audit Report</div>
-      <div class="service-card-desc">A full professional SEO audit covering on-page optimisation, Core Web Vitals, backlink profile analysis, technical issues, and a prioritised 90-day action plan.</div>
-      <div class="service-includes">
-        <div class="service-include-item">On-page & technical SEO analysis</div>
-        <div class="service-include-item">Core Web Vitals assessment</div>
-        <div class="service-include-item">Backlink profile report</div>
-        <div class="service-include-item">Prioritised recommendations</div>
-        <div class="service-include-item">90-day action plan</div>
+      <div class="sc-header">
+        <div class="service-card-num">Service · 001</div>
+        <div class="service-badge">Most Popular</div>
+        <div class="service-card-title">On-Page & Technical SEO Audit</div>
+        <div class="service-card-desc">Full website audit covering on-page SEO, Core Web Vitals, technical health, backlink profile analysis, and a prioritised action plan — delivered as a professional PDF report.</div>
       </div>
-      <div class="service-price">From $30 · PDF Delivery</div>
+      <div class="tier-row">
+        <div class="tier-label-col">Basic</div>
+        <div class="tier-detail">
+          <div class="tier-desc-line">Starter Audit · 1-day delivery</div>
+          <div class="tier-features-inline">
+            <span class="tier-feat-tag">On-page audit</span>
+            <span class="tier-feat-tag">Fix report</span>
+            <span class="tier-feat-tag">Index review</span>
+          </div>
+        </div>
+        <div class="tier-price-col">
+          <div class="tier-price-num">$5</div>
+          <div class="tier-order-btns">
+            <a href="https://www.fiverr.com/farhan712006/do-on-page-and-technical-seo-for-just-5-dollars" target="_blank" class="btn-f">Fiverr ↗</a>
+            <a href="https://www.upwork.com/services/product/marketing-on-page-and-technical-seo-with-website-audit-done-for-you-2055056188445412931?ref=project_share" target="_blank" class="btn-u">Upwork ↗</a>
+          </div>
+        </div>
+      </div>
+      <div class="tier-row">
+        <div class="tier-label-col">Standard</div>
+        <div class="tier-detail">
+          <div class="tier-desc-line">Standard Audit · 2-day delivery</div>
+          <div class="tier-features-inline">
+            <span class="tier-feat-tag">Full audit + strategy</span>
+            <span class="tier-feat-tag">XML sitemap</span>
+            <span class="tier-feat-tag">Robots.txt</span>
+            <span class="tier-feat-tag">Score 80+</span>
+          </div>
+        </div>
+        <div class="tier-price-col">
+          <div class="tier-price-num">$15</div>
+          <div class="tier-order-btns">
+            <a href="https://www.fiverr.com/farhan712006/do-on-page-and-technical-seo-for-just-5-dollars" target="_blank" class="btn-f">Fiverr ↗</a>
+            <a href="https://www.upwork.com/services/product/marketing-on-page-and-technical-seo-with-website-audit-done-for-you-2055056188445412931?ref=project_share&tier=1" target="_blank" class="btn-u">Upwork ↗</a>
+          </div>
+        </div>
+      </div>
+      <div class="tier-row">
+        <div class="tier-label-col">Premium</div>
+        <div class="tier-detail">
+          <div class="tier-desc-line">Complete Analysis · 3-day delivery</div>
+          <div class="tier-features-inline">
+            <span class="tier-feat-tag">Advanced strategy</span>
+            <span class="tier-feat-tag">Image compression</span>
+            <span class="tier-feat-tag">Score 90+</span>
+          </div>
+        </div>
+        <div class="tier-price-col">
+          <div class="tier-price-num">$25</div>
+          <div class="tier-order-btns">
+            <a href="https://www.fiverr.com/farhan712006/do-on-page-and-technical-seo-for-just-5-dollars" target="_blank" class="btn-f">Fiverr ↗</a>
+            <a href="https://www.upwork.com/services/product/marketing-on-page-and-technical-seo-with-website-audit-done-for-you-2055056188445412931?ref=project_share&tier=2" target="_blank" class="btn-u">Upwork ↗</a>
+          </div>
+        </div>
+      </div>
     </div>
 
+    <!-- GIG 002: EMAIL MARKETING ── header row -->
     <div class="service-card reveal">
-      <div class="service-card-num">Service · 002</div>
-      <div class="service-card-title">Excel Dashboard</div>
-      <div class="service-card-desc">Custom Excel dashboards built to your exact requirements — sales trackers, budget dashboards, KPI monitors, HR performance reports, and marketing ROI trackers.</div>
-      <div class="service-includes">
-        <div class="service-include-item">Multi-tab dashboard structure</div>
-        <div class="service-include-item">Advanced formulas & automation</div>
-        <div class="service-include-item">Colour-coded KPI indicators</div>
-        <div class="service-include-item">Charts & visual summaries</div>
-        <div class="service-include-item">Sample data pre-filled</div>
+      <div class="sc-header">
+        <div class="service-card-num">Service · 002</div>
+        <div class="service-card-title">Email Marketing & Automations</div>
+        <div class="service-card-desc">Complete email marketing setup — account configuration, branded templates, automation sequences, newsletters, and subscriber forms on HubSpot, Mailchimp, or Klaviyo.</div>
       </div>
-      <div class="service-price">From $40 · XLSX Delivery</div>
+      <div class="tier-row">
+        <div class="tier-label-col">Basic</div>
+        <div class="tier-detail">
+          <div class="tier-desc-line">Welcome Email · 1-day delivery</div>
+          <div class="tier-features-inline">
+            <span class="tier-feat-tag">Account setup</span>
+            <span class="tier-feat-tag">Integrations</span>
+            <span class="tier-feat-tag">1 template</span>
+          </div>
+        </div>
+        <div class="tier-price-col">
+          <div class="tier-price-num">$5</div>
+          <div class="tier-order-btns">
+            <a href="https://www.fiverr.com/s/yvkAqjV" target="_blank" class="btn-f">Fiverr ↗</a>
+            <a href="https://www.upwork.com/services/product/marketing-email-marketing-campaigns-automations-and-newsletters-set-up-and-managed-2055102451700766990?ref=project_share" target="_blank" class="btn-u">Upwork ↗</a>
+          </div>
+        </div>
+      </div>
+      <div class="tier-row">
+        <div class="tier-label-col">Standard</div>
+        <div class="tier-detail">
+          <div class="tier-desc-line">Pro Email Sequence · 2-day delivery</div>
+          <div class="tier-features-inline">
+            <span class="tier-feat-tag">3 templates</span>
+            <span class="tier-feat-tag">3 automations</span>
+            <span class="tier-feat-tag">1 newsletter</span>
+            <span class="tier-feat-tag">Analytics</span>
+          </div>
+        </div>
+        <div class="tier-price-col">
+          <div class="tier-price-num">$15</div>
+          <div class="tier-order-btns">
+            <a href="https://www.fiverr.com/s/yvkAqjV" target="_blank" class="btn-f">Fiverr ↗</a>
+            <a href="https://www.upwork.com/services/product/marketing-email-marketing-campaigns-automations-and-newsletters-set-up-and-managed-2055102451700766990?ref=project_share&tier=1" target="_blank" class="btn-u">Upwork ↗</a>
+          </div>
+        </div>
+      </div>
+      <div class="tier-row">
+        <div class="tier-label-col">Premium</div>
+        <div class="tier-detail">
+          <div class="tier-desc-line">Full Email Flow · 4-day delivery</div>
+          <div class="tier-features-inline">
+            <span class="tier-feat-tag">3 campaigns</span>
+            <span class="tier-feat-tag">2 newsletters</span>
+            <span class="tier-feat-tag">5 templates</span>
+            <span class="tier-feat-tag">Landing page</span>
+            <span class="tier-feat-tag">Spam protection</span>
+          </div>
+        </div>
+        <div class="tier-price-col">
+          <div class="tier-price-num">$25</div>
+          <div class="tier-order-btns">
+            <a href="https://www.fiverr.com/s/yvkAqjV" target="_blank" class="btn-f">Fiverr ↗</a>
+            <a href="https://www.upwork.com/services/product/marketing-email-marketing-campaigns-automations-and-newsletters-set-up-and-managed-2055102451700766990?ref=project_share&tier=2" target="_blank" class="btn-u">Upwork ↗</a>
+          </div>
+        </div>
+      </div>
     </div>
 
+    <!-- GIG 003: SOCIAL MEDIA ── header row -->
     <div class="service-card reveal">
-      <div class="service-card-num">Service · 003</div>
-      <div class="service-card-title">Email Marketing Setup</div>
-      <div class="service-card-desc">Complete email marketing sequences — welcome flows, nurture campaigns, onboarding series — fully written, structured, and ready to paste into HubSpot or Mailchimp.</div>
-      <div class="service-includes">
-        <div class="service-include-item">3–5 email sequence written</div>
-        <div class="service-include-item">Subject lines & preview text</div>
-        <div class="service-include-item">Send timing & segmentation logic</div>
-        <div class="service-include-item">HubSpot / Mailchimp setup guide</div>
+      <div class="sc-header">
+        <div class="service-card-num">Service · 003</div>
+        <div class="service-card-title">Social Media Content Calendar</div>
+        <div class="service-card-desc">Fully planned content calendars with written captions, researched hashtags, content types, and posting schedules — delivered as an editable spreadsheet ready to execute.</div>
       </div>
-      <div class="service-price">From $50 · DOCX + Setup Guide</div>
+      <div class="tier-row">
+        <div class="tier-label-col">Basic</div>
+        <div class="tier-detail">
+          <div class="tier-desc-line">2-Week Calendar · 3-day delivery · 2 revisions</div>
+          <div class="tier-features-inline">
+            <span class="tier-feat-tag">Channel evaluation</span>
+            <span class="tier-feat-tag">6 hashtags</span>
+            <span class="tier-feat-tag">5 posts</span>
+          </div>
+        </div>
+        <div class="tier-price-col">
+          <div class="tier-price-num">$5</div>
+          <div class="tier-order-btns">
+            <a href="https://www.fiverr.com/s/DBpmEpQ" target="_blank" class="btn-f">Fiverr ↗</a>
+            <a href="https://www.upwork.com/services/product/marketing-a-social-media-marketing-content-calendar-for-created-for-you-2055062673678257731?ref=project_share" target="_blank" class="btn-u">Upwork ↗</a>
+          </div>
+        </div>
+      </div>
+      <div class="tier-row">
+        <div class="tier-label-col">Standard</div>
+        <div class="tier-detail">
+          <div class="tier-desc-line">4-Week Calendar · 5-day delivery · 4 revisions</div>
+          <div class="tier-features-inline">
+            <span class="tier-feat-tag">Channel evaluation</span>
+            <span class="tier-feat-tag">8 hashtags</span>
+            <span class="tier-feat-tag">12 posts</span>
+          </div>
+        </div>
+        <div class="tier-price-col">
+          <div class="tier-price-num">$10</div>
+          <div class="tier-order-btns">
+            <a href="https://www.fiverr.com/s/DBpmEpQ" target="_blank" class="btn-f">Fiverr ↗</a>
+            <a href="https://www.upwork.com/services/product/marketing-a-social-media-marketing-content-calendar-for-created-for-you-2055062673678257731?ref=project_share&tier=1" target="_blank" class="btn-u">Upwork ↗</a>
+          </div>
+        </div>
+      </div>
+      <div class="tier-row">
+        <div class="tier-label-col">Premium</div>
+        <div class="tier-detail">
+          <div class="tier-desc-line">8-Week Calendar · 7-day delivery · 6 revisions</div>
+          <div class="tier-features-inline">
+            <span class="tier-feat-tag">Channel evaluation</span>
+            <span class="tier-feat-tag">10 hashtags</span>
+            <span class="tier-feat-tag">24 posts</span>
+            <span class="tier-feat-tag">Feed template</span>
+          </div>
+        </div>
+        <div class="tier-price-col">
+          <div class="tier-price-num">$20</div>
+          <div class="tier-order-btns">
+            <a href="https://www.fiverr.com/s/DBpmEpQ" target="_blank" class="btn-f">Fiverr ↗</a>
+            <a href="https://www.upwork.com/services/product/marketing-a-social-media-marketing-content-calendar-for-created-for-you-2055062673678257731?ref=project_share&tier=2" target="_blank" class="btn-u">Upwork ↗</a>
+          </div>
+        </div>
+      </div>
     </div>
 
+    <!-- GIG 004: VA / DATA ENTRY ── header row -->
     <div class="service-card reveal">
-      <div class="service-card-num">Service · 004</div>
-      <div class="service-card-title">Social Media Calendar</div>
-      <div class="service-card-desc">A complete 30-day content calendar with captions, hashtags, posting schedule, and content strategy — tailored to your brand and platform of choice.</div>
-      <div class="service-includes">
-        <div class="service-include-item">30 posts fully written</div>
-        <div class="service-include-item">Captions, hashtags & timing</div>
-        <div class="service-include-item">Platform-specific strategy</div>
-        <div class="service-include-item">Engagement & growth tactics</div>
+      <div class="sc-header">
+        <div class="service-card-num">Service · 004</div>
+        <div class="service-card-title">Virtual Assistant & Data Entry</div>
+        <div class="service-card-desc">Professional data entry, PDF to Excel conversion, data cleaning, spreadsheet buildout, and formula setup — accurate, fast, and delivered in your preferred format.</div>
       </div>
-      <div class="service-price">From $30 · XLSX Delivery</div>
-    </div>
-
-    <div class="service-card reveal">
-      <div class="service-card-num">Service · 005</div>
-      <div class="service-card-title">VA & Data Entry</div>
-      <div class="service-card-desc">Fast, accurate virtual assistant support — data entry, PDF to Excel conversion, CRM cleanup, web research reports, email drafts, and calendar/schedule management.</div>
-      <div class="service-includes">
-        <div class="service-include-item">Data entry & PDF conversion</div>
-        <div class="service-include-item">CRM data cleaning & audit</div>
-        <div class="service-include-item">Web research reports</div>
-        <div class="service-include-item">Email drafting & scheduling</div>
-        <div class="service-include-item">Admin & document support</div>
+      <div class="tier-row">
+        <div class="tier-label-col">Basic</div>
+        <div class="tier-detail">
+          <div class="tier-desc-line">Offer Entry · 1-day delivery</div>
+          <div class="tier-features-inline">
+            <span class="tier-feat-tag">3+1 hrs data entry</span>
+            <span class="tier-feat-tag">PDF to Excel</span>
+            <span class="tier-feat-tag">Data cleaning</span>
+          </div>
+        </div>
+        <div class="tier-price-col">
+          <div class="tier-price-num">$5</div>
+          <div class="tier-order-btns">
+            <a href="https://www.fiverr.com/s/0b4dZbE" target="_blank" class="btn-f">Fiverr ↗</a>
+            <a href="https://www.upwork.com/services/product/admin-customer-support-a-professional-virtual-assistant-for-data-entry-2055106727881775374?ref=project_share" target="_blank" class="btn-u">Upwork ↗</a>
+          </div>
+        </div>
       </div>
-      <div class="service-price">From $5 · Fast Turnaround</div>
+      <div class="tier-row">
+        <div class="tier-label-col">Standard</div>
+        <div class="tier-detail">
+          <div class="tier-desc-line">Pro Entry · 2-day delivery</div>
+          <div class="tier-features-inline">
+            <span class="tier-feat-tag">6 hrs data entry</span>
+            <span class="tier-feat-tag">PDF to Excel</span>
+            <span class="tier-feat-tag">Formula setup</span>
+          </div>
+        </div>
+        <div class="tier-price-col">
+          <div class="tier-price-num">$10</div>
+          <div class="tier-order-btns">
+            <a href="https://www.fiverr.com/s/0b4dZbE" target="_blank" class="btn-f">Fiverr ↗</a>
+            <a href="https://www.upwork.com/services/product/admin-customer-support-a-professional-virtual-assistant-for-data-entry-2055106727881775374?ref=project_share&tier=1" target="_blank" class="btn-u">Upwork ↗</a>
+          </div>
+        </div>
+      </div>
+      <div class="tier-row">
+        <div class="tier-label-col">Premium</div>
+        <div class="tier-detail">
+          <div class="tier-desc-line">Full Service · 3-day delivery</div>
+          <div class="tier-features-inline">
+            <span class="tier-feat-tag">10 hrs data entry</span>
+            <span class="tier-feat-tag">Spreadsheet buildout</span>
+            <span class="tier-feat-tag">Image conversion</span>
+          </div>
+        </div>
+        <div class="tier-price-col">
+          <div class="tier-price-num">$15</div>
+          <div class="tier-order-btns">
+            <a href="https://www.fiverr.com/s/0b4dZbE" target="_blank" class="btn-f">Fiverr ↗</a>
+            <a href="https://www.upwork.com/services/product/admin-customer-support-a-professional-virtual-assistant-for-data-entry-2055106727881775374?ref=project_share&tier=2" target="_blank" class="btn-u">Upwork ↗</a>
+          </div>
+        </div>
+      </div>
     </div>
 
   </div>
@@ -714,68 +1045,13 @@ footer {
   <div class="portfolio-grid">
 
     <div class="portfolio-card reveal">
-      <div class="portfolio-card-type">Excel Dashboard</div>
-      <div class="portfolio-card-title">Sales Performance Tracker</div>
-      <div class="portfolio-card-desc">Multi-tab e-commerce sales dashboard with revenue trends, product deep-dive analysis, and monthly comparisons. Advanced SUMIF, VLOOKUP, and conditional formatting throughout.</div>
-      <div class="portfolio-card-tag">XLSX · 5 Tabs</div>
-      <div class="portfolio-card-actions">
-        <a href="Sales_Performance_Tracker_v2.xlsx" download class="btn-download">↓ Download & Open</a>
-        
-      </div>
-    </div>
-
-    <div class="portfolio-card reveal">
-      <div class="portfolio-card-type">Excel Dashboard</div>
-      <div class="portfolio-card-title">Monthly Budget Dashboard</div>
-      <div class="portfolio-card-desc">Small business finance tracker with budget vs actuals, variance analysis, executive summary, and colour-coded KPI indicators across 5 tabs.</div>
-      <div class="portfolio-card-tag">XLSX · 5 Tabs</div>
-      <div class="portfolio-card-actions">
-        <a href="Monthly_Budget_Dashboard.xlsx" download class="btn-download">↓ Download & Open</a>
-        
-      </div>
-    </div>
-
-    <div class="portfolio-card reveal">
-      <div class="portfolio-card-type">Excel Dashboard</div>
-      <div class="portfolio-card-title">Marketing Campaign ROI</div>
-      <div class="portfolio-card-desc">Full marketing performance tracker covering campaign data, SEO & organic metrics, and email performance analysis — all in one unified dashboard.</div>
-      <div class="portfolio-card-tag">XLSX · 5 Tabs</div>
-      <div class="portfolio-card-actions">
-        <a href="Marketing_Campaign_ROI_v2.xlsx" download class="btn-download">↓ Download & Open</a>
-        
-      </div>
-    </div>
-
-    <div class="portfolio-card reveal">
-      <div class="portfolio-card-type">Excel Dashboard</div>
-      <div class="portfolio-card-title">Project KPI Dashboard</div>
-      <div class="portfolio-card-desc">Agency-level project management tracker with milestone tracking, team performance metrics, and an executive summary view for client reporting.</div>
-      <div class="portfolio-card-tag">XLSX · 5 Tabs</div>
-      <div class="portfolio-card-actions">
-        <a href="Project_KPI_Dashboard.xlsx" download class="btn-download">↓ Download & Open</a>
-        
-      </div>
-    </div>
-
-    <div class="portfolio-card reveal">
-      <div class="portfolio-card-type">Excel Dashboard</div>
-      <div class="portfolio-card-title">HR & Employee Performance</div>
-      <div class="portfolio-card-desc">HR dashboard covering employee performance scores, compensation analysis, and recruitment pipeline tracking — built for small to mid-size teams.</div>
-      <div class="portfolio-card-tag">XLSX · 5 Tabs</div>
-      <div class="portfolio-card-actions">
-        <a href="HR_Employee_Performance_v2.xlsx" download class="btn-download">↓ Download & Open</a>
-        
-      </div>
-    </div>
-
-    <div class="portfolio-card reveal">
       <div class="portfolio-card-type">SEO Audit</div>
       <div class="portfolio-card-title">Backlinko.com SEO Audit</div>
       <div class="portfolio-card-desc">Full professional SEO audit — on-page analysis, Core Web Vitals, backlink profile, 10 prioritised issues, and a 90-day action plan. Overall score: 72/100.</div>
       <div class="portfolio-card-tag">PDF · 5 Pages</div>
       <div class="portfolio-card-actions">
-        <a href="SEO_Audit_Backlinko_com.pdf" download class="btn-download">↓ Download</a>
-        <a href="SEO_Audit_Backlinko_com.pdf" target="_blank" class="btn-preview">↗ View PDF</a>
+        <a href="SEO_Audit_backlinko_com.pdf" download class="btn-download">↓ Download</a>
+        <a href="SEO_Audit_backlinko_com.pdf" target="_blank" class="btn-preview">↗ View PDF</a>
       </div>
     </div>
 
@@ -785,8 +1061,8 @@ footer {
       <div class="portfolio-card-desc">Comprehensive SEO audit covering technical issues, content gaps, keyword opportunities, and backlink analysis with prioritised recommendations. Score: 69/100.</div>
       <div class="portfolio-card-tag">PDF · 5 Pages</div>
       <div class="portfolio-card-actions">
-        <a href="SEO_Audit_NeilPatel_com.pdf" download class="btn-download">↓ Download</a>
-        <a href="SEO_Audit_NeilPatel_com.pdf" target="_blank" class="btn-preview">↗ View PDF</a>
+        <a href="SEO_Audit_neilpatel_com.pdf" download class="btn-download">↓ Download</a>
+        <a href="SEO_Audit_neilpatel_com.pdf" target="_blank" class="btn-preview">↗ View PDF</a>
       </div>
     </div>
 
@@ -796,8 +1072,8 @@ footer {
       <div class="portfolio-card-desc">Agency-level SEO audit for a complex SaaS site — technical SEO, crawlability, schema markup, and a phased action plan for ranking improvement. Score: 81/100.</div>
       <div class="portfolio-card-tag">PDF · 5 Pages</div>
       <div class="portfolio-card-actions">
-        <a href="SEO_Audit_Ahrefs_com.pdf" download class="btn-download">↓ Download</a>
-        <a href="SEO_Audit_Ahrefs_com.pdf" target="_blank" class="btn-preview">↗ View PDF</a>
+        <a href="SEO_Audit_ahrefs_com.pdf" download class="btn-download">↓ Download</a>
+        <a href="SEO_Audit_ahrefs_com.pdf" target="_blank" class="btn-preview">↗ View PDF</a>
       </div>
     </div>
 
@@ -813,12 +1089,14 @@ footer {
 
     <div class="portfolio-card reveal">
       <div class="portfolio-card-type">Social Media</div>
-      <div class="portfolio-card-title">Social Media Calendars</div>
-      <div class="portfolio-card-desc">Three 30-day content calendars for a restaurant (Instagram), personal finance brand (LinkedIn), and clothing store (Facebook + Instagram) — 90 posts total.</div>
-      <div class="portfolio-card-tag">XLSX · 3 Brands</div>
+      <div class="portfolio-card-title">Social Media Content Calendars</div>
+      <div class="portfolio-card-desc">Three 30-day content calendars — Spice &amp; Ember (Instagram), ClearWealth (LinkedIn), Linen &amp; Co (Facebook + Instagram) — plus a full content strategy PDF. 90 posts total.</div>
+      <div class="portfolio-card-tag">XLSX · 3 Brands · Strategy PDF</div>
       <div class="portfolio-card-actions">
-        <a href="Social_Media_Content_Calendars.xlsx" download class="btn-download">↓ Download & Open</a>
-        
+        <a href="SM_Calendar_SpiceEmber_Instagram.xlsx" download class="btn-download">↓ Instagram Cal</a>
+        <a href="SM_Calendar_ClearWealth_LinkedIn.xlsx" download class="btn-download">↓ LinkedIn Cal</a>
+        <a href="SM_Calendar_LinenCo_FBandIG.xlsx" download class="btn-download">↓ FB+IG Cal</a>
+        <a href="Social_Media_Content_Strategy.pdf" target="_blank" class="btn-preview">↗ Strategy PDF</a>
       </div>
     </div>
 
@@ -876,7 +1154,73 @@ footer {
       </div>
     </div>
 
-    <div class="portfolio-card reveal" style="display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;background:var(--bg2)">
+    <div class="portfolio-card reveal">
+      <div class="portfolio-card-type">Email Marketing</div>
+      <div class="portfolio-card-title">Welcome Email Template</div>
+      <div class="portfolio-card-desc">Branded HTML email template for a welcome sequence — responsive design, professional layout, clear CTA, and editable structure for any business.</div>
+      <div class="portfolio-card-tag">HTML · Email Template</div>
+      <div class="portfolio-card-actions">
+        <a href="email_template_1.html" download class="btn-download">↓ Download</a>
+        <a href="email_template_1.html" target="_blank" class="btn-preview">↗ Preview</a>
+      </div>
+    </div>
+
+    <div class="portfolio-card reveal">
+      <div class="portfolio-card-type">Email Marketing</div>
+      <div class="portfolio-card-title">Re-Engagement Email Template</div>
+      <div class="portfolio-card-desc">HTML re-engagement email template designed to win back inactive subscribers — urgency-driven copy, clean structure, and mobile-responsive layout.</div>
+      <div class="portfolio-card-tag">HTML · Email Template</div>
+      <div class="portfolio-card-actions">
+        <a href="email_template_2.html" download class="btn-download">↓ Download</a>
+        <a href="email_template_2.html" target="_blank" class="btn-preview">↗ Preview</a>
+      </div>
+    </div>
+
+    <div class="portfolio-card reveal">
+      <div class="portfolio-card-type">Email Marketing</div>
+      <div class="portfolio-card-title">Email Automation Flow</div>
+      <div class="portfolio-card-desc">Visual email automation flow diagram — maps the full sequence from subscriber entry to conversion, including triggers, conditions, and branch logic.</div>
+      <div class="portfolio-card-tag">HTML · Flow Diagram</div>
+      <div class="portfolio-card-actions">
+        <a href="email_automation_flow.html" download class="btn-download">↓ Download</a>
+        <a href="email_automation_flow.html" target="_blank" class="btn-preview">↗ Preview</a>
+      </div>
+    </div>
+
+    <div class="portfolio-card reveal">
+      <div class="portfolio-card-type">Email Marketing</div>
+      <div class="portfolio-card-title">Email Campaign Metrics Dashboard</div>
+      <div class="portfolio-card-desc">HTML metrics dashboard showing campaign performance — open rates, click rates, conversions, and revenue attribution in a clean visual layout.</div>
+      <div class="portfolio-card-tag">HTML · Metrics Report</div>
+      <div class="portfolio-card-actions">
+        <a href="email_flow_metrics.html" download class="btn-download">↓ Download</a>
+        <a href="email_flow_metrics.html" target="_blank" class="btn-preview">↗ Preview</a>
+      </div>
+    </div>
+
+    <div class="portfolio-card reveal">
+      <div class="portfolio-card-type">VA · Scheduling</div>
+      <div class="portfolio-card-title">Executive Weekly Schedule</div>
+      <div class="portfolio-card-desc">Professional weekly calendar for a busy executive — Mon–Sun, 8AM–7PM, color-coded by task type. Built as a clean HTML file for easy sharing and printing.</div>
+      <div class="portfolio-card-tag">HTML · Weekly Calendar</div>
+      <div class="portfolio-card-actions">
+        <a href="ClientC_Calendar_Schedule.html" download class="btn-download">↓ Download</a>
+        <a href="ClientC_Calendar_Schedule.html" target="_blank" class="btn-preview">↗ Preview</a>
+      </div>
+    </div>
+
+    <div class="portfolio-card reveal">
+      <div class="portfolio-card-type">VA · Communication</div>
+      <div class="portfolio-card-title">Client Email Drafts</div>
+      <div class="portfolio-card-desc">Five professional email drafts written on behalf of a client — follow-up, meeting request, project update, invoice reminder, and onboarding welcome. Ready to send.</div>
+      <div class="portfolio-card-tag">HTML · 5 Email Drafts</div>
+      <div class="portfolio-card-actions">
+        <a href="ClientD_Email_Drafts.html" download class="btn-download">↓ Download</a>
+        <a href="ClientD_Email_Drafts.html" target="_blank" class="btn-preview">↗ Preview</a>
+      </div>
+    </div>
+
+        <div class="portfolio-card reveal" style="display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;background:var(--bg2)">
       <div style="font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:300;color:var(--border2);margin-bottom:1rem">+</div>
       <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--text3)">More on request</div>
       <div style="font-size:12px;color:var(--text3);margin-top:8px;font-weight:300">Custom deliverables<br>available on Fiverr</div>
@@ -903,7 +1247,7 @@ footer {
       I hold <strong style="color:var(--text1)">58+ certifications</strong> across digital marketing, SEO, Excel analytics, business analysis, and AI. Issued by HubSpot, Google, Anthropic, Microsoft, and Coursera. I combine data skills with marketing expertise to deliver work that is both analytical and results-driven.
     </p>
     <p>
-      I work with small businesses and entrepreneurs who need professional deliverables fast. SEO audits, Excel dashboards, email marketing setups, social media calendars. All backed by certified knowledge and built to a standard clients can actually use.
+      I work with small businesses and entrepreneurs who need professional deliverables fast. SEO audits, email marketing setups, social media calendars, and VA services. All backed by certified knowledge and built to a standard clients can actually use.
     </p>
   </div>
 </section>
@@ -1087,7 +1431,7 @@ footer {
 
     <div style="border-top:1px solid var(--border);padding:1.5rem 0;">
       <div style="font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--text1);font-weight:500;margin-bottom:0.6rem;">What file formats do you deliver?</div>
-      <div style="font-size:13px;color:var(--text3);line-height:1.8;">Excel dashboards as .xlsx, reports as .docx or .pdf, SEO audits as .pdf, social media calendars as .xlsx or Google Sheets, email sequences as .docx. I can adjust based on your preference.</div>
+      <div style="font-size:13px;color:var(--text3);line-height:1.8;">Reports as .docx or .pdf, SEO audits as .pdf, social media calendars as .xlsx or Google Sheets, email sequences as .docx. I can adjust based on your preference.</div>
     </div>
 
     <div style="border-top:1px solid var(--border);padding:1.5rem 0;">
