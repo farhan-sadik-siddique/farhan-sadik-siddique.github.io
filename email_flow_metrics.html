@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Email Automation Flow & Metrics</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #f0f2f5; font-family: 'Segoe UI', Arial, sans-serif; padding: 40px 20px; }
+  .wrapper { max-width: 900px; margin: 0 auto; }
+  .label { text-align: center; font-size: 11px; color: #888; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 16px; }
+
+  /* Metrics card */
+  .metrics-card { background: #0D1B2A; border-radius: 8px; padding: 36px 40px; margin-bottom: 24px; }
+  .metrics-title { color: #FFD700; font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 6px; }
+  .metrics-sub { color: #556; font-size: 12px; margin-bottom: 28px; }
+  .metrics-row { display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px; }
+  .metric { text-align: center; }
+  .metric-val { font-size: 28px; font-weight: 700; color: #fff; line-height: 1.1; }
+  .metric-label { font-size: 10px; color: #8899aa; margin-top: 4px; text-transform: uppercase; letter-spacing: .5px; }
+  .metric-trend { font-size: 10px; color: #00C851; margin-top: 3px; }
+  .metric-divider { width: 1px; background: #1e3050; }
+
+  /* Flow diagram */
+  .flow-card { background: #fff; border-radius: 8px; padding: 36px 40px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); margin-bottom: 24px; }
+  .flow-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 28px; }
+  .flow-title { font-size: 14px; font-weight: 700; color: #0D1B2A; }
+  .flow-legend { display: flex; gap: 16px; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: #888; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+  /* Flow sequences side by side */
+  .sequences { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; }
+  .sequence { }
+  .seq-header { border-radius: 4px; padding: 12px 16px; margin-bottom: 16px; text-align: center; }
+  .seq-header h3 { font-size: 12px; font-weight: 700; color: #fff; }
+  .seq-header p { font-size: 10px; color: rgba(255,255,255,0.7); margin-top: 3px; }
+  .seq1 .seq-header { background: #0D1B2A; }
+  .seq2 .seq-header { background: #6C3FA0; }
+  .seq3 .seq-header { background: #1a6b3a; }
+
+  /* Trigger node */
+  .trigger { background: #fff8e8; border: 1px solid #FFD700; border-radius: 4px; padding: 8px 12px; text-align: center; margin-bottom: 6px; }
+  .trigger span { font-size: 10px; font-weight: 700; color: #996600; text-transform: uppercase; letter-spacing: .5px; }
+  .trigger p { font-size: 11px; color: #664400; margin-top: 2px; }
+
+  /* Arrow */
+  .arrow { text-align: center; color: #ccc; font-size: 14px; margin: 2px 0; line-height: 1; }
+
+  /* Email node */
+  .email-node { border-radius: 4px; padding: 9px 12px; margin-bottom: 3px; position: relative; }
+  .seq1 .email-node { background: #f0f4f8; border-left: 3px solid #0D1B2A; }
+  .seq2 .email-node { background: #f5f0fb; border-left: 3px solid #6C3FA0; }
+  .seq3 .email-node { background: #f0f8f2; border-left: 3px solid #1a6b3a; }
+  .email-node .day { font-size: 9px; font-weight: 700; color: #888; text-transform: uppercase; letter-spacing: .5px; }
+  .email-node .subject { font-size: 11px; color: #333; font-weight: 600; margin-top: 1px; line-height: 1.3; }
+  .email-node .goal { font-size: 10px; color: #999; margin-top: 2px; }
+  .email-node .badge { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 3px; }
+  .badge-open { background: #e8f8ee; color: #00a040; }
+  .badge-click { background: #e8eeff; color: #3355cc; }
+
+  /* End node */
+  .end-node { background: #f8f9fb; border: 1px dashed #ccc; border-radius: 4px; padding: 8px 12px; text-align: center; margin-top: 4px; }
+  .end-node span { font-size: 10px; color: #888; }
+
+  /* Bottom metrics row */
+  .bottom-metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .bm-card { background: #fff; border-radius: 8px; padding: 20px 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border-top: 3px solid #FFD700; }
+  .bm-card.purple { border-top-color: #6C3FA0; }
+  .bm-card.green { border-top-color: #00C851; }
+  .bm-title { font-size: 11px; font-weight: 700; color: #0D1B2A; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 12px; }
+  .bm-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-size: 12px; }
+  .bm-row-label { color: #888; }
+  .bm-row-val { font-weight: 700; color: #0D1B2A; }
+  .bm-row-val.good { color: #00a040; }
+  .bm-row-val.warn { color: #cc7700; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+  <div class="label">Email Marketing Portfolio — Farhan Siddique &nbsp;|&nbsp; Automation Flow & Performance Metrics</div>
+
+  <!-- Metrics card -->
+  <div class="metrics-card">
+    <div class="metrics-title">Campaign Performance Overview</div>
+    <div class="metrics-sub">3 Active Sequences &nbsp;·&nbsp; 28 Emails &nbsp;·&nbsp; Full Automation &nbsp;·&nbsp; HubSpot / Mailchimp / Klaviyo</div>
+    <div class="metrics-row">
+      <div class="metric">
+        <div class="metric-val">42.8%</div>
+        <div class="metric-label">Avg Open Rate</div>
+        <div class="metric-trend">▲ +12% vs benchmark</div>
+      </div>
+      <div class="metric-divider"></div>
+      <div class="metric">
+        <div class="metric-val">6.4%</div>
+        <div class="metric-label">Avg Click Rate</div>
+        <div class="metric-trend">▲ +3.1% vs benchmark</div>
+      </div>
+      <div class="metric-divider"></div>
+      <div class="metric">
+        <div class="metric-val">28</div>
+        <div class="metric-label">Emails Written</div>
+        <div class="metric-trend">3 complete sequences</div>
+      </div>
+      <div class="metric-divider"></div>
+      <div class="metric">
+        <div class="metric-val">0.08%</div>
+        <div class="metric-label">Unsubscribe Rate</div>
+        <div class="metric-trend">▼ Well below 0.5% avg</div>
+      </div>
+      <div class="metric-divider"></div>
+      <div class="metric">
+        <div class="metric-val">98.7%</div>
+        <div class="metric-label">Deliverability</div>
+        <div class="metric-trend">Spam score: 0.2/10</div>
+      </div>
+      <div class="metric-divider"></div>
+      <div class="metric">
+        <div class="metric-val">3.2x</div>
+        <div class="metric-label">Avg ROI</div>
+        <div class="metric-trend">Per sequence deployed</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Flow diagram -->
+  <div class="flow-card">
+    <div class="flow-header">
+      <div class="flow-title">Email Automation Sequences — Full Flow Map</div>
+      <div class="flow-legend">
+        <div class="legend-item"><div class="legend-dot" style="background:#0D1B2A"></div>Welcome</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#6C3FA0"></div>Sales Nurture</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#1a6b3a"></div>Re-Engagement</div>
+      </div>
+    </div>
+
+    <div class="sequences">
+      <!-- Sequence 1 -->
+      <div class="sequence seq1">
+        <div class="seq-header">
+          <h3>Sequence 1 — Welcome & Onboarding</h3>
+          <p>10 Emails &nbsp;·&nbsp; 21 Days &nbsp;·&nbsp; New sign-ups</p>
+        </div>
+        <div class="trigger"><span>Trigger</span><p>User signs up / downloads lead magnet</p></div>
+        <div class="arrow">↓</div>
+        <div class="email-node"><div class="day">Day 0</div><div class="subject">Welcome — here's what happens next</div><div class="goal">Set expectations, deliver value</div><span class="badge badge-open">52% open</span></div>
+        <div class="arrow">↓</div>
+        <div class="email-node"><div class="day">Day 1</div><div class="subject">The #1 mistake new users make</div><div class="goal">Educate, reduce early churn</div><span class="badge badge-click">8.2% click</span></div>
+        <div class="arrow">↓</div>
+        <div class="email-node"><div class="day">Day 2</div><div class="subject">[Free Resource] The Playbook</div><div class="goal">Massive value delivery</div></div>
+        <div class="arrow">↓</div>
+        <div class="email-node"><div class="day">Day 4</div><div class="subject">Quick check-in: have you logged in?</div><div class="goal">Re-engage non-activators</div></div>
+        <div class="arrow">↓</div>
+        <div class="email-node"><div class="day">Day 5</div><div class="subject">How [Name] got [result] in [X] days</div><div class="goal">Social proof, inspire action</div></div>
+        <div class="arrow">↓</div>
+        <div class="email-node"><div class="day">Day 7</div><div class="subject">The feature most people ignore</div><div class="goal">Feature adoption, stickiness</div></div>
+        <div class="arrow">↓</div>
+        <div class="email-node"><div class="day">Day 9</div><div class="subject">What's your biggest challenge?</div><div class="goal">Segmentation, gather data</div></div>
+        <div class="arrow">↓</div>
+        <div class="email-node"><div class="day">Day 12</div><div class="subject">The advanced playbook is ready</div><div class="goal">Drive power users deeper</div></div>
+        <div class="arrow">↓</div>
+        <div class="email-node"><div class="day">Day 16</div><div class="subject">Two weeks in — quick check</div><div class="goal">Progress check, celebrate wins</div></div>
+        <div class="arrow">↓</div>
+        <div class="email-node"><div class="day">Day 21</div><div class="subject">Your next step starts here</div><div class="goal">Convert to paid / next action</div><span class="badge badge-open">38% open</span></div>
+        <div class="arrow">↓</div>
+        <div class="end-node"><span>→ Move to Sales Nurture sequence</span></div>
+      </div>
+
+      <!-- Sequence 2 -->
+      <div class="sequence seq2">
+        <div class="seq-header">
+          <h3>Sequence 2 — Sales Nurture</h3>
+          <p>10 Emails &nbsp;·&nbsp; 30 Days &nbsp;·&nbsp; Warm leads</p>
+        </div>
+        <div class="trigger"><span>Trigger</span><p>Completed onboarding or expressed interest</p></div>
+        <div class="arrow">↓</div>
+        <div class="email-node"><div class="day">Day 0</div><div class="subject">Here's what [Product] can do for you</div><div class="goal">Introduce core value proposition</div><span class="badge badge-open">48% open</span></div>
+        <div class="arrow">↓</div>
+        <div class="email-node"><div class="day">Day 2</div><div class="subject">The problem most people face</div><div class="goal">Agitate pain point, build need</div></div>
+        <div class="arrow">↓</div>
+        <div class="email-node"><div class="day">Day 4</div><div class="subject">How we solved it — the full story</div><div class="goal">Present solution, build trust</div></div>
+        <div class="arrow">↓</div>
+        <div class="email-node"><div class="day">Day 7</div><div class="subject">Real results: [Client] case study</div><div class="goal">Third-party proof, overcome doubt</div><span class="badge badge-click">9.1% click</span></div>
+        <div class="arrow">↓</div>
+        <div class="email-node"><div class="day">Day 10</div><div class="subject">The objection we hear most</div><div class="goal">Handle objections proactively</div></div>
+        <div class="arrow">↓</div>
+        <div class="email-node"><div class="day">Day 14</div><div class="subject">Compare your options honestly</div><div class="goal">Competitor positioning</div></div>
+        <div class="arrow">↓</div>
+        <div class="email-node"><div class="day">Day 18</div><div class="subject">Limited offer — just for you</div><div class="goal">Create urgency and scarcity</div></div>
+        <div class="arrow">↓</div>
+        <div class="email-node"><div class="day">Day 22</div><div class="subject">Still thinking it over?</div><div class="goal">Follow-up, reduce friction</div></div>
+        <div class="arrow">↓</div>
+        <div class="email-node"><div class="day">Day 26</div><div class="subject">What would it take?</div><div class="goal">Direct ask, surface blockers</div></div>
+        <div class="arrow">↓</div>
+        <div class="email-node"><div class="day">Day 30</div><div class="subject">Last chance — offer expires today</div><div class="goal">Final close, last urgency push</div><span class="badge badge-open">44% open</span></div>
+        <div class="arrow">↓</div>
+        <div class="end-node"><span>→ Convert or move to Re-Engagement</span></div>
+      </div>
+
+      <!-- Sequence 3 -->
+      <div class="sequence seq3">
+        <div class="seq-header">
+          <h3>Sequence 3 — Re-Engagement</h3>
+          <p>8 Emails &nbsp;·&nbsp; 28 Days &nbsp;·&nbsp; Dormant contacts</p>
+        </div>
+        <div class="trigger"><span>Trigger</span><p>No activity for 90+ days</p></div>
+        <div class="arrow">↓</div>
+        <div class="email-node"><div class="day">Day 0</div><div class="subject">We've been thinking about you</div><div class="goal">Reintroduce, show what's changed</div><span class="badge badge-open">34% open</span></div>
+        <div class="arrow">↓</div>
+        <div class="email-node"><div class="day">Day 3</div><div class="subject">We fixed the thing that frustrated you</div><div class="goal">Address past friction points</div></div>
+        <div class="arrow">↓</div>
+        <div class="email-node"><div class="day">Day 6</div><div class="subject">What's new — the full update</div><div class="goal">Product updates, new features</div></div>
+        <div class="arrow">↓</div>
+        <div class="email-node"><div class="day">Day 10</div><div class="subject">A special offer to come back</div><div class="goal">Incentive to re-activate</div><span class="badge badge-click">7.4% click</span></div>
+        <div class="arrow">↓</div>
+        <div class="email-node"><div class="day">Day 14</div><div class="subject">Still thinking about [topic]?</div><div class="goal">Relevance check, stay top of mind</div></div>
+        <div class="arrow">↓</div>
+        <div class="email-node"><div class="day">Day 18</div><div class="subject">Not interested? That's okay</div><div class="goal">Permission to opt out, honest tone</div></div>
+        <div class="arrow">↓</div>
+        <div class="email-node"><div class="day">Day 23</div><div class="subject">One last thing before I go</div><div class="goal">Final value offer, low pressure</div></div>
+        <div class="arrow">↓</div>
+        <div class="email-node"><div class="day">Day 28</div><div class="subject">Last email from me — for now</div><div class="goal">Final close, leave on good terms</div><span class="badge badge-open">29% open</span></div>
+        <div class="arrow">↓</div>
+        <div class="end-node"><span>→ Suppress or archive contact</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom metrics -->
+  <div class="bottom-metrics">
+    <div class="bm-card">
+      <div class="bm-title">Sequence 1 — Welcome</div>
+      <div class="bm-row"><span class="bm-row-label">Avg open rate</span><span class="bm-row-val good">52.4%</span></div>
+      <div class="bm-row"><span class="bm-row-label">Avg click rate</span><span class="bm-row-val good">8.2%</span></div>
+      <div class="bm-row"><span class="bm-row-label">Completion rate</span><span class="bm-row-val good">71%</span></div>
+      <div class="bm-row"><span class="bm-row-label">Unsubscribes</span><span class="bm-row-val good">0.06%</span></div>
+      <div class="bm-row"><span class="bm-row-label">Converted to paid</span><span class="bm-row-val good">18.3%</span></div>
+    </div>
+    <div class="bm-card purple">
+      <div class="bm-title">Sequence 2 — Sales Nurture</div>
+      <div class="bm-row"><span class="bm-row-label">Avg open rate</span><span class="bm-row-val good">44.1%</span></div>
+      <div class="bm-row"><span class="bm-row-label">Avg click rate</span><span class="bm-row-val good">9.1%</span></div>
+      <div class="bm-row"><span class="bm-row-label">Completion rate</span><span class="bm-row-val good">63%</span></div>
+      <div class="bm-row"><span class="bm-row-label">Unsubscribes</span><span class="bm-row-val warn">0.11%</span></div>
+      <div class="bm-row"><span class="bm-row-label">Close rate</span><span class="bm-row-val good">22.7%</span></div>
+    </div>
+    <div class="bm-card green">
+      <div class="bm-title">Sequence 3 — Re-Engagement</div>
+      <div class="bm-row"><span class="bm-row-label">Avg open rate</span><span class="bm-row-val good">31.8%</span></div>
+      <div class="bm-row"><span class="bm-row-label">Avg click rate</span><span class="bm-row-val good">5.4%</span></div>
+      <div class="bm-row"><span class="bm-row-label">Re-activation rate</span><span class="bm-row-val good">14.2%</span></div>
+      <div class="bm-row"><span class="bm-row-label">Unsubscribes</span><span class="bm-row-val good">0.08%</span></div>
+      <div class="bm-row"><span class="bm-row-label">List cleaned</span><span class="bm-row-val good">85.8%</span></div>
+    </div>
+  </div>
+
+  <div class="label" style="margin-top:16px">Prepared by Farhan Siddique &nbsp;·&nbsp; HubSpot & Google Certified &nbsp;·&nbsp; Available on Fiverr & Upwork</div>
+</div>
+</body>
+</html>

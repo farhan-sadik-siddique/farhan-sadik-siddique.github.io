@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Email Automation Flow — Farhan Siddique</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #080c12;
+    --bg2: #0e1420;
+    --bg3: #141a26;
+    --border: rgba(255,255,255,0.07);
+    --border2: rgba(255,255,255,0.13);
+    --teal: #00d4aa;
+    --teal2: #00b08c;
+    --teal-glow: rgba(0,212,170,0.18);
+    --teal-glow2: rgba(0,212,170,0.06);
+    --purple: #9b8dff;
+    --purple-glow: rgba(155,141,255,0.15);
+    --amber: #f5a623;
+    --amber-glow: rgba(245,166,35,0.15);
+    --red: #ff5757;
+    --red-glow: rgba(255,87,87,0.15);
+    --blue: #4da6ff;
+    --blue-glow: rgba(77,166,255,0.15);
+    --gray-node: #1e2535;
+    --text: #e8eaf0;
+    --text2: #8892a4;
+    --text3: #4e5870;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 0;
+    overflow-x: hidden;
+  }
+
+  /* Background grid */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .wrapper {
+    position: relative;
+    z-index: 1;
+    width: 1200px;
+    margin: 0 auto;
+    padding: 48px 40px 56px;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 40px;
+  }
+
+  .header-left {}
+  .eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    color: var(--teal);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .title {
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+    color: #fff;
+    line-height: 1.15;
+  }
+  .title span { color: var(--teal); }
+  .subtitle {
+    margin-top: 8px;
+    font-size: 13.5px;
+    color: var(--text2);
+    font-weight: 400;
+  }
+
+  .header-stats {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    padding-top: 4px;
+  }
+  .stat-pill {
+    background: var(--bg3);
+    border: 0.5px solid var(--border2);
+    border-radius: 8px;
+    padding: 10px 16px;
+    text-align: center;
+    min-width: 72px;
+  }
+  .stat-pill .num {
+    font-family: 'Space Mono', monospace;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--teal);
+    line-height: 1;
+  }
+  .stat-pill .lab {
+    font-size: 10px;
+    color: var(--text3);
+    margin-top: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  /* ── TABS ── */
+  .tabs {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 28px;
+  }
+  .tab {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12.5px;
+    font-weight: 500;
+    color: var(--text2);
+    background: var(--bg2);
+    border: 0.5px solid var(--border);
+    border-radius: 6px;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: all .2s;
+    letter-spacing: 0.01em;
+  }
+  .tab:hover { border-color: var(--border2); color: var(--text); }
+  .tab.active {
+    background: var(--teal-glow2);
+    border-color: var(--teal2);
+    color: var(--teal);
+  }
+
+  /* ── FLOW CANVAS ── */
+  .flow-canvas {
+    background: var(--bg2);
+    border: 0.5px solid var(--border2);
+    border-radius: 16px;
+    padding: 32px 28px 36px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* subtle glow in top-left corner */
+  .flow-canvas::before {
+    content: '';
+    position: absolute;
+    top: -60px; left: -60px;
+    width: 320px; height: 320px;
+    background: radial-gradient(circle, rgba(0,212,170,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  /* ── GOAL ROW ── */
+  .goal-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 28px;
+    padding: 12px 16px;
+    background: rgba(0,212,170,0.04);
+    border: 0.5px solid rgba(0,212,170,0.15);
+    border-radius: 8px;
+  }
+  .goal-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.14em;
+    color: var(--teal);
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .goal-sep { width: 1px; height: 14px; background: rgba(0,212,170,0.25); }
+  .goal-text { font-size: 12.5px; color: var(--text2); }
+  .goal-arrow { margin-left: 8px; color: var(--teal); opacity: 0.5; font-size: 12px; }
+
+  /* ── FLOW ROW ── */
+  .flow-row {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    position: relative;
+  }
+
+  /* connector lines drawn behind nodes */
+  .connectors {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: visible;
+  }
+
+  /* ── EMAIL NODE ── */
+  .email-node {
+    flex: 1;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 4px;
+    z-index: 2;
+  }
+
+  /* vertical line from trigger down to node */
+  .v-line {
+    width: 1px;
+    height: 20px;
+    background: linear-gradient(to bottom, rgba(0,212,170,0.4), rgba(0,212,170,0.1));
+    margin-bottom: 0;
+    flex-shrink: 0;
+  }
+
+  .node-card {
+    width: 100%;
+    border-radius: 10px;
+    padding: 10px 8px 9px;
+    text-align: center;
+    border: 0.5px solid;
+    position: relative;
+    transition: transform .15s, box-shadow .15s;
+    cursor: default;
+  }
+  .node-card:hover {
+    transform: translateY(-2px);
+  }
+
+  .node-day {
+    font-family: 'Space Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.1em;
+    margin-bottom: 5px;
+    opacity: 0.6;
+  }
+  .node-title {
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.3;
+    margin-bottom: 4px;
+  }
+  .node-sub {
+    font-size: 9.5px;
+    line-height: 1.3;
+    opacity: 0.65;
+    margin-bottom: 5px;
+  }
+  .node-action {
+    display: inline-block;
+    font-size: 8.5px;
+    font-family: 'Space Mono', monospace;
+    padding: 2px 7px;
+    border-radius: 20px;
+    opacity: 0.8;
+    letter-spacing: 0.04em;
+  }
+
+  /* teal = value */
+  .n-teal { background: rgba(0,180,140,0.12); border-color: rgba(0,212,170,0.3); color: #a0f5e4; box-shadow: 0 0 16px rgba(0,212,170,0.08); }
+  .n-teal .node-action { background: rgba(0,212,170,0.12); color: var(--teal); }
+  .n-teal:hover { box-shadow: 0 4px 24px rgba(0,212,170,0.18); }
+
+  /* purple = conversion */
+  .n-purple { background: rgba(120,108,220,0.1); border-color: rgba(155,141,255,0.3); color: #cfc8ff; box-shadow: 0 0 16px rgba(155,141,255,0.07); }
+  .n-purple .node-action { background: rgba(155,141,255,0.12); color: var(--purple); }
+  .n-purple:hover { box-shadow: 0 4px 24px rgba(155,141,255,0.18); }
+
+  /* amber = social proof */
+  .n-amber { background: rgba(200,130,20,0.1); border-color: rgba(245,166,35,0.3); color: #fdd9a0; box-shadow: 0 0 16px rgba(245,166,35,0.07); }
+  .n-amber .node-action { background: rgba(245,166,35,0.12); color: var(--amber); }
+  .n-amber:hover { box-shadow: 0 4px 24px rgba(245,166,35,0.18); }
+
+  /* red = urgency */
+  .n-red { background: rgba(200,60,60,0.1); border-color: rgba(255,87,87,0.3); color: #ffb8b8; box-shadow: 0 0 16px rgba(255,87,87,0.07); }
+  .n-red .node-action { background: rgba(255,87,87,0.12); color: var(--red); }
+  .n-red:hover { box-shadow: 0 4px 24px rgba(255,87,87,0.18); }
+
+  /* gray = checkin */
+  .n-gray { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.1); color: #9aa3b5; }
+  .n-gray .node-action { background: rgba(255,255,255,0.06); color: #7a839a; }
+  .n-gray:hover { box-shadow: 0 4px 20px rgba(255,255,255,0.06); }
+
+  /* blue = trigger */
+  .n-blue { background: rgba(50,110,200,0.12); border-color: rgba(77,166,255,0.35); color: #b0d4ff; box-shadow: 0 0 18px rgba(77,166,255,0.1); }
+  .n-blue .node-action { background: rgba(77,166,255,0.12); color: var(--blue); }
+  .n-blue:hover { box-shadow: 0 4px 24px rgba(77,166,255,0.2); }
+
+  /* ── TRIGGER ── */
+  .trigger-row {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 0;
+    padding-left: 0;
+  }
+  .trigger-node {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(50,110,200,0.1);
+    border: 0.5px solid rgba(77,166,255,0.35);
+    border-radius: 8px;
+    padding: 8px 14px;
+    margin-bottom: 12px;
+    width: fit-content;
+  }
+  .trigger-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--blue);
+    box-shadow: 0 0 8px rgba(77,166,255,0.6);
+    flex-shrink: 0;
+    animation: pulse-dot 2s ease-in-out infinite;
+  }
+  @keyframes pulse-dot {
+    0%,100%{ box-shadow: 0 0 6px rgba(77,166,255,0.5); }
+    50%{ box-shadow: 0 0 14px rgba(77,166,255,0.9); }
+  }
+  .trigger-label { font-size: 12px; font-weight: 500; color: #b0d4ff; }
+  .trigger-sub { font-size: 10.5px; color: var(--text3); margin-left: 4px; }
+
+  /* ── DECISION LAYER ── */
+  .decision-row {
+    display: flex;
+    align-items: flex-start;
+    margin-top: 20px;
+    gap: 0;
+  }
+
+  .decision-block {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    padding: 0 4px;
+  }
+  .decision-vline {
+    width: 1px;
+    height: 14px;
+    background: rgba(245,166,35,0.25);
+    flex-shrink: 0;
+  }
+  .decision-diamond {
+    position: relative;
+    width: 100%;
+    text-align: center;
+    padding: 8px 6px;
+    background: rgba(245,166,35,0.07);
+    border: 0.5px solid rgba(245,166,35,0.25);
+    border-radius: 6px;
+  }
+  .decision-q {
+    font-size: 9px;
+    font-weight: 600;
+    color: var(--amber);
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 0.05em;
+  }
+  .decision-branches {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px;
+    gap: 4px;
+  }
+  .branch-yes, .branch-no {
+    font-size: 8.5px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    flex: 1;
+    text-align: center;
+    line-height: 1.3;
+  }
+  .branch-yes { background: rgba(0,212,170,0.1); color: var(--teal); border: 0.5px solid rgba(0,212,170,0.2); }
+  .branch-no  { background: rgba(255,87,87,0.08); color: #ff8080; border: 0.5px solid rgba(255,87,87,0.18); }
+  .decision-spacer { flex: 1; }
+
+  /* ── LEGEND ── */
+  .legend {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 0.5px solid var(--border);
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: var(--text3);
+  }
+  .legend-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* ── FOOTER BRAND ── */
+  .brand-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 32px;
+    padding-top: 20px;
+    border-top: 0.5px solid var(--border);
+  }
+  .brand-name {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--text3);
+    letter-spacing: 0.06em;
+  }
+  .brand-name span { color: var(--teal); }
+  .brand-tag {
+    font-size: 10.5px;
+    color: var(--text3);
+  }
+
+  /* connector SVG between nodes */
+  .connector-svg {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    overflow: visible;
+    z-index: 1;
+  }
+
+  @media print {
+    body { background: #080c12 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrapper">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-left">
+      <div class="eyebrow">// Email Marketing Automation</div>
+      <div class="title">Sequence <span>Flow Architecture</span></div>
+      <div class="subtitle">3 complete sequences · 28 emails · Up to 30-day nurture window</div>
+    </div>
+    <div class="header-stats">
+      <div class="stat-pill"><div class="num">3</div><div class="lab">Sequences</div></div>
+      <div class="stat-pill"><div class="num">28</div><div class="lab">Emails</div></div>
+      <div class="stat-pill"><div class="num">30</div><div class="lab">Day max</div></div>
+      <div class="stat-pill"><div class="num">2</div><div class="lab">Decision pts</div></div>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="tab active" onclick="showSeq(0,this)">01 — Welcome &amp; onboarding</button>
+    <button class="tab" onclick="showSeq(1,this)">02 — Sales nurture</button>
+    <button class="tab" onclick="showSeq(2,this)">03 — Re-engagement</button>
+  </div>
+
+  <!-- FLOW CANVAS -->
+  <div class="flow-canvas" id="flow-canvas"></div>
+
+  <!-- LEGEND -->
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#00d4aa;box-shadow:0 0 6px rgba(0,212,170,0.5)"></div>Value / education</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#9b8dff;box-shadow:0 0 6px rgba(155,141,255,0.5)"></div>Conversion push</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#f5a623;box-shadow:0 0 6px rgba(245,166,35,0.5)"></div>Social proof</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#ff5757;box-shadow:0 0 6px rgba(255,87,87,0.5)"></div>Urgency / close</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#6b7896"></div>Check-in / soft touch</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#4da6ff;box-shadow:0 0 6px rgba(77,166,255,0.5)"></div>Trigger / entry point</div>
+    <div class="legend-item" style="margin-left:auto">
+      <svg width="24" height="10" style="flex-shrink:0"><line x1="0" y1="5" x2="18" y2="5" stroke="#f5a623" stroke-width="1" stroke-dasharray="3 2"/><polygon points="18,2 24,5 18,8" fill="#f5a623"/></svg>
+      Decision branch
+    </div>
+    <div class="legend-item">
+      <svg width="24" height="10" style="flex-shrink:0"><line x1="0" y1="5" x2="18" y2="5" stroke="#00d4aa" stroke-width="1.5"/><polygon points="18,2 24,5 18,8" fill="#00d4aa"/></svg>
+      Linear flow
+    </div>
+  </div>
+
+  <!-- BRAND FOOTER -->
+  <div class="brand-footer">
+    <div class="brand-name">Prepared by <span>Farhan Siddique</span> · Digital Marketer &amp; Email Strategist</div>
+    <div class="brand-tag">HubSpot Certified · Email Marketing Strategy &amp; Automation · May 2026</div>
+  </div>
+
+</div>
+
+<script>
+const seqs = [
+  {
+    goal: "Activate users → Deliver value → Build habit → Convert to paid",
+    trigger: "New sign-up",
+    triggerSub: "Immediately on form submission",
+    days: "21 days",
+    emails: [
+      { day:"Day 0", title:"Welcome email", sub:"What happens next", color:"n-blue", action:"Delivered" },
+      { day:"Day 1", title:"The #1 mistake", sub:"Common new-user error", color:"n-teal", action:"Opens" },
+      { day:"Day 2", title:"Free resource", sub:"Promised content delivered", color:"n-teal", action:"Downloads" },
+      { day:"Day 3", title:"Check-in nudge", sub:"Logged in yet?", color:"n-gray", action:"Engages" },
+      { day:"Day 5", title:"Case study", sub:"Real client result", color:"n-amber", action:"Clicks" },
+      { day:"Day 7", title:"Hidden feature", sub:"What most users ignore", color:"n-teal", action:"Engages" },
+      { day:"Day 9", title:"Survey email", sub:"What's in the way?", color:"n-gray", action:"Replies" },
+      { day:"Day 12", title:"Advanced tips", sub:"For active users only", color:"n-teal", action:"Reads" },
+      { day:"Day 14", title:"2-week check", sub:"Progress review", color:"n-gray", action:"Engages" },
+      { day:"Day 21", title:"Upgrade offer", sub:"Special deal + next step", color:"n-purple", action:"Converts" }
+    ],
+    decisions: [
+      { afterIdx: 3, q:"Opened email 4?", yes:"Continue seq.", no:"Resend alt. subject" },
+      { afterIdx: 7, q:"Clicked CTA?", yes:"Continue seq.", no:"Soft re-engage" }
+    ]
+  },
+  {
+    goal: "Build trust → Remove objections → Generate discovery call bookings",
+    trigger: "Lead capture",
+    triggerSub: "Download / webinar / site visit",
+    days: "30 days",
+    emails: [
+      { day:"Day 0",  title:"You're not alone", sub:"Industry pain point", color:"n-teal", action:"Opens" },
+      { day:"Day 2",  title:"Why X fails", sub:"Challenge the norm", color:"n-teal", action:"Clicks" },
+      { day:"Day 4",  title:"Case study", sub:"$0 → result in N days", color:"n-amber", action:"Clicks" },
+      { day:"Day 7",  title:"3 questions", sub:"Are you ready?", color:"n-gray", action:"Replies" },
+      { day:"Day 10", title:"Vision email", sub:"What success looks like", color:"n-teal", action:"Engages" },
+      { day:"Day 14", title:"Objection buster", sub:"The unspoken hesitation", color:"n-purple", action:"Clicks" },
+      { day:"Day 17", title:"Comparison", sub:"Us vs. alternatives", color:"n-purple", action:"Clicks" },
+      { day:"Day 21", title:"Free session", sub:"Free audit / strategy call", color:"n-purple", action:"Books" },
+      { day:"Day 25", title:"Last chance", sub:"Offer expires [date]", color:"n-red", action:"Decides" },
+      { day:"Day 30", title:"Final email", sub:"Farewell + lasting value", color:"n-gray", action:"Exit / stay" }
+    ],
+    decisions: [
+      { afterIdx: 3, q:"Replied?", yes:"Move to sales CRM", no:"Continue sequence" },
+      { afterIdx: 7, q:"Booked call?", yes:"Exit → CRM pipeline", no:"Send urgency close" }
+    ]
+  },
+  {
+    goal: "Reconnect → Rebuild trust → Compelling return offer → Win back",
+    trigger: "Inactivity trigger",
+    triggerSub: "60–90 days of no engagement",
+    days: "28 days",
+    emails: [
+      { day:"Day 0",  title:"It's been a while", sub:"Honest update from us", color:"n-gray", action:"Opens" },
+      { day:"Day 3",  title:"We fixed it", sub:"What frustrated you before", color:"n-teal", action:"Clicks" },
+      { day:"Day 6",  title:"Return story", sub:"Client who came back", color:"n-amber", action:"Clicks" },
+      { day:"Day 10", title:"Industry update", sub:"What changed in 6 mo.", color:"n-teal", action:"Engages" },
+      { day:"Day 14", title:"Exclusive offer", sub:"Welcome-back deal", color:"n-purple", action:"Clicks" },
+      { day:"Day 18", title:"Offer reminder", sub:"Still available for you", color:"n-red", action:"Decides" },
+      { day:"Day 22", title:"Last chance", sub:"Offer ends soon", color:"n-red", action:"Converts" },
+      { day:"Day 28", title:"Goodbye email", sub:"Respectful exit or return", color:"n-gray", action:"Exits / stays" }
+    ],
+    decisions: [
+      { afterIdx: 2, q:"Re-engaged?", yes:"Fast-track to offer", no:"Gentle nurture" },
+      { afterIdx: 5, q:"Converted?", yes:"Restore as client", no:"Final close + exit" }
+    ]
+  }
+];
+
+function showSeq(idx, btn) {
+  document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  render(idx);
+}
+
+function render(idx) {
+  const s = seqs[idx];
+  const canvas = document.getElementById('flow-canvas');
+
+  // Build decision map: afterIdx -> decision object
+  const decisionMap = {};
+  s.decisions.forEach(d => { decisionMap[d.afterIdx] = d; });
+
+  // TRIGGER NODE
+  let html = `
+  <div class="trigger-node" style="margin-bottom:16px;">
+    <div class="trigger-dot"></div>
+    <div>
+      <span class="trigger-label">${s.trigger}</span>
+      <span class="trigger-sub">— ${s.triggerSub}</span>
+    </div>
+  </div>`;
+
+  // GOAL BAR
+  html += `<div class="goal-row">
+    <span class="goal-label">Sequence goal</span>
+    <div class="goal-sep"></div>
+    <span class="goal-text">${s.goal}</span>
+  </div>`;
+
+  // EMAIL NODES ROW
+  html += `<div class="flow-row" id="email-row">`;
+  s.emails.forEach((e, i) => {
+    html += `<div class="email-node">
+      <div class="node-card ${e.color}">
+        <div class="node-day">${e.day}</div>
+        <div class="node-title">${e.title}</div>
+        <div class="node-sub">${e.sub}</div>
+        <div class="node-action">→ ${e.action}</div>
+      </div>
+    </div>`;
+  });
+  html += `</div>`; // .flow-row
+
+  // DECISION ROW
+  html += `<div class="decision-row">`;
+  s.emails.forEach((e, i) => {
+    const d = decisionMap[i];
+    if (d) {
+      html += `<div class="decision-block">
+        <div class="decision-vline"></div>
+        <div class="decision-diamond">
+          <div class="decision-q">${d.q}</div>
+          <div class="decision-branches">
+            <div class="branch-yes">✓ ${d.yes}</div>
+            <div class="branch-no">✗ ${d.no}</div>
+          </div>
+        </div>
+      </div>`;
+    } else {
+      html += `<div class="decision-spacer"></div>`;
+    }
+  });
+  html += `</div>`;
+
+  // SVG connector arrows between nodes
+  html += `<svg class="connector-svg" id="conn-svg" style="position:absolute;top:0;left:0;pointer-events:none;overflow:visible;z-index:1;width:100%;height:100%;"></svg>`;
+
+  canvas.innerHTML = html;
+  canvas.style.position = 'relative';
+
+  // Draw SVG connectors after DOM is painted
+  requestAnimationFrame(() => drawConnectors(s.emails.length));
+}
+
+function drawConnectors(count) {
+  const row = document.getElementById('email-row');
+  const svg = document.getElementById('conn-svg');
+  if (!row || !svg) return;
+
+  const nodes = row.querySelectorAll('.node-card');
+  const canvasRect = document.getElementById('flow-canvas').getBoundingClientRect();
+
+  let paths = `<defs><marker id="ch" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 1L9 5L1 9" fill="none" stroke="#00d4aa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>`;
+
+  for (let i = 0; i < nodes.length - 1; i++) {
+    const r1 = nodes[i].getBoundingClientRect();
+    const r2 = nodes[i+1].getBoundingClientRect();
+    const x1 = r1.right - canvasRect.left;
+    const x2 = r2.left - canvasRect.left;
+    const y  = (r1.top + r1.bottom)/2 - canvasRect.top;
+    paths += `<line x1="${x1}" y1="${y}" x2="${x2-2}" y2="${y}" stroke="rgba(0,212,170,0.3)" stroke-width="1.5" marker-end="url(#ch)"/>`;
+  }
+
+  svg.innerHTML = paths;
+}
+
+render(0);
+window.addEventListener('resize', () => {
+  const activeTab = document.querySelector('.tab.active');
+  if (activeTab) {
+    const idx = Array.from(document.querySelectorAll('.tab')).indexOf(activeTab);
+    drawConnectors(seqs[idx].emails.length);
+  }
+});
+</script>
+</body>
+</html>

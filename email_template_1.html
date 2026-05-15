@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Welcome Email Template</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #f0f2f5; font-family: 'Segoe UI', Arial, sans-serif; padding: 40px 20px; }
+  .wrapper { max-width: 620px; margin: 0 auto; }
+
+  /* Top label */
+  .label { text-align: center; font-size: 11px; color: #888; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 16px; }
+
+  /* Email card */
+  .email { background: #ffffff; border-radius: 4px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
+
+  /* Header */
+  .header { background: #0D1B2A; padding: 36px 48px; text-align: center; }
+  .logo-badge { display: inline-block; background: #FFD700; color: #0D1B2A; font-size: 11px; font-weight: 700; letter-spacing: 2px; padding: 6px 16px; border-radius: 2px; margin-bottom: 20px; text-transform: uppercase; }
+  .header h1 { color: #ffffff; font-size: 26px; font-weight: 700; line-height: 1.3; margin-bottom: 10px; }
+  .header p { color: #8899aa; font-size: 13px; line-height: 1.6; }
+
+  /* Sequence badge */
+  .seq-badge { background: #f8f9fb; border-top: 3px solid #FFD700; padding: 12px 48px; display: flex; align-items: center; gap: 20px; font-size: 11px; color: #888; }
+  .seq-badge span { font-weight: 700; color: #0D1B2A; }
+
+  /* Body */
+  .body { padding: 40px 48px; }
+  .greeting { font-size: 15px; color: #333; margin-bottom: 16px; }
+  .body p { font-size: 14px; color: #444; line-height: 1.8; margin-bottom: 16px; }
+
+  /* Highlight box */
+  .highlight { background: #f8f9fb; border-left: 4px solid #FFD700; border-radius: 0 4px 4px 0; padding: 20px 24px; margin: 24px 0; }
+  .highlight h3 { font-size: 13px; font-weight: 700; color: #0D1B2A; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 14px; }
+  .step { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 12px; }
+  .step-num { background: #0D1B2A; color: #FFD700; font-size: 11px; font-weight: 700; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+  .step p { font-size: 13px; color: #444; margin: 0; line-height: 1.6; }
+
+  /* CTA */
+  .cta-wrap { text-align: center; margin: 32px 0; }
+  .cta { display: inline-block; background: #FFD700; color: #0D1B2A; font-size: 14px; font-weight: 700; padding: 14px 40px; border-radius: 3px; text-decoration: none; letter-spacing: .3px; }
+
+  /* Divider */
+  .divider { border: none; border-top: 1px solid #eee; margin: 24px 0; }
+
+  /* Signature */
+  .sig { font-size: 14px; color: #444; margin-bottom: 4px; }
+  .sig-title { font-size: 12px; color: #888; }
+  .ps { font-size: 13px; color: #666; font-style: italic; margin-top: 20px; padding-top: 16px; border-top: 1px solid #eee; }
+
+  /* Footer */
+  .footer { background: #0D1B2A; padding: 24px 48px; text-align: center; }
+  .footer p { font-size: 11px; color: #556; line-height: 1.8; }
+  .footer a { color: #8899aa; text-decoration: none; }
+
+  /* Meta strip */
+  .meta { display: flex; justify-content: space-between; background: #f8f9fb; padding: 10px 48px; border-top: 1px solid #eee; font-size: 11px; color: #aaa; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+  <div class="label">Email Marketing Portfolio — Farhan Siddique &nbsp;|&nbsp; Sequence 1 of 3 &nbsp;|&nbsp; Welcome & Onboarding</div>
+
+  <div class="email">
+    <!-- Header -->
+    <div class="header">
+      <div class="logo-badge">Your Brand</div>
+      <h1>Welcome — here's exactly what happens next</h1>
+      <p>Your access is ready. Plus a quick-start guide inside.</p>
+    </div>
+
+    <!-- Sequence info strip -->
+    <div class="seq-badge">
+      <div>Sequence: <span>Welcome & Onboarding</span></div>
+      <div>Email: <span>1 of 10</span></div>
+      <div>Send time: <span>Day 0 — Immediately on sign-up</span></div>
+      <div>Goal: <span>Activate & set expectations</span></div>
+    </div>
+
+    <!-- Body -->
+    <div class="body">
+      <div class="greeting">Hi [First Name],</div>
+      <p>Welcome — and congratulations on taking the step.</p>
+      <p>You're now part of a community of <strong>[X] professionals</strong> who use [Product/Service] to grow their business, save 10+ hours per week, and land better clients.</p>
+      <p>Here's what's waiting for you right now:</p>
+
+      <div class="highlight">
+        <h3>Your 7-Minute Quick Start</h3>
+        <div class="step">
+          <div class="step-num">1</div>
+          <p><strong>Log in and complete your profile</strong> — takes about 2 minutes. This personalises everything from here.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <p><strong>Set your first goal inside the dashboard</strong> — 3 minutes. Tells us what to focus on for you.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <p><strong>Hit reply and tell me your #1 challenge right now</strong> — 2 minutes. Every email I send will be shaped by this.</p>
+        </div>
+      </div>
+
+      <p>That last step matters most. Most people skip it. The ones who reply get better results — because every email from here is shaped around what they told me.</p>
+
+      <div class="cta-wrap">
+        <a href="#" class="cta">Get Started in 7 Minutes &rarr;</a>
+      </div>
+
+      <hr class="divider">
+
+      <div class="sig">Talk soon,</div>
+      <div class="sig"><strong>[Your Name]</strong></div>
+      <div class="sig-title">[Title] at [Company Name]</div>
+
+      <div class="ps">P.S. Tomorrow I'm sending the #1 mistake new users make — and how to avoid it. Keep an eye on your inbox.</div>
+    </div>
+
+    <!-- Meta strip -->
+    <div class="meta">
+      <span>Subject: Welcome! Here's exactly what happens next</span>
+      <span>Preview: Your access is ready — plus a quick-start guide inside</span>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <p>[Company Name] &nbsp;·&nbsp; [Address] &nbsp;·&nbsp; [City, Country]<br>
+      <a href="#">Unsubscribe</a> &nbsp;·&nbsp; <a href="#">Privacy Policy</a> &nbsp;·&nbsp; <a href="#">View in browser</a></p>
+    </div>
+  </div>
+
+  <div class="label" style="margin-top:16px">Prepared by Farhan Siddique &nbsp;·&nbsp; HubSpot & Google Certified &nbsp;·&nbsp; Available on Fiverr & Upwork</div>
+</div>
+</body>
+</html>

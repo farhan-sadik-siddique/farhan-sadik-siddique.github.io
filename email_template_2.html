@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Re-Engagement Email Template</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #f0f2f5; font-family: 'Segoe UI', Arial, sans-serif; padding: 40px 20px; }
+  .wrapper { max-width: 620px; margin: 0 auto; }
+  .label { text-align: center; font-size: 11px; color: #888; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 16px; }
+  .email { background: #ffffff; border-radius: 4px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
+
+  /* Header */
+  .header { background: linear-gradient(135deg, #1a0533, #3d1065); padding: 36px 48px; text-align: center; position: relative; overflow: hidden; }
+  .header::before { content: ''; position: absolute; top: -30px; right: -30px; width: 140px; height: 140px; border-radius: 50%; background: rgba(108,63,160,0.3); }
+  .header::after { content: ''; position: absolute; bottom: -20px; left: -20px; width: 100px; height: 100px; border-radius: 50%; background: rgba(108,63,160,0.2); }
+  .logo-badge { display: inline-block; background: rgba(255,255,255,0.15); color: #fff; font-size: 11px; font-weight: 700; letter-spacing: 2px; padding: 6px 16px; border-radius: 2px; margin-bottom: 20px; text-transform: uppercase; border: 1px solid rgba(255,255,255,0.2); position: relative; z-index: 1; }
+  .header h1 { color: #ffffff; font-size: 24px; font-weight: 700; line-height: 1.3; margin-bottom: 10px; position: relative; z-index: 1; }
+  .header p { color: rgba(255,255,255,0.7); font-size: 13px; line-height: 1.6; position: relative; z-index: 1; }
+
+  /* Seq strip */
+  .seq-badge { background: #f8f9fb; border-top: 3px solid #6C3FA0; padding: 12px 48px; display: flex; align-items: center; gap: 20px; font-size: 11px; color: #888; flex-wrap: wrap; }
+  .seq-badge span { font-weight: 700; color: #0D1B2A; }
+
+  /* Body */
+  .body { padding: 40px 48px; }
+  .greeting { font-size: 15px; color: #333; margin-bottom: 16px; }
+  .body p { font-size: 14px; color: #444; line-height: 1.8; margin-bottom: 16px; }
+
+  /* Stat box */
+  .stat-row { display: flex; gap: 12px; margin: 24px 0; }
+  .stat { flex: 1; background: #f8f9fb; border-radius: 4px; padding: 16px; text-align: center; border-top: 3px solid #6C3FA0; }
+  .stat-num { font-size: 24px; font-weight: 700; color: #6C3FA0; }
+  .stat-label { font-size: 11px; color: #888; margin-top: 4px; }
+
+  /* Reason list */
+  .reason-list { background: #faf8ff; border: 1px solid #e8e0f5; border-radius: 4px; padding: 20px 24px; margin: 20px 0; }
+  .reason-list h3 { font-size: 12px; font-weight: 700; color: #6C3FA0; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 12px; }
+  .reason { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-size: 13px; color: #444; }
+  .reason-dot { width: 6px; height: 6px; border-radius: 50%; background: #6C3FA0; flex-shrink: 0; }
+
+  /* CTA */
+  .cta-wrap { text-align: center; margin: 28px 0; }
+  .cta { display: inline-block; background: #6C3FA0; color: #ffffff; font-size: 14px; font-weight: 700; padding: 14px 40px; border-radius: 3px; text-decoration: none; letter-spacing: .3px; }
+  .cta-sub { text-align: center; font-size: 12px; color: #aaa; margin-top: 8px; }
+
+  /* Divider */
+  .divider { border: none; border-top: 1px solid #eee; margin: 24px 0; }
+
+  /* Sig */
+  .sig { font-size: 14px; color: #444; margin-bottom: 4px; }
+  .sig-title { font-size: 12px; color: #888; }
+  .ps { font-size: 13px; color: #666; font-style: italic; margin-top: 20px; padding-top: 16px; border-top: 1px solid #eee; }
+
+  /* Footer */
+  .footer { background: #1a0533; padding: 24px 48px; text-align: center; }
+  .footer p { font-size: 11px; color: #776688; line-height: 1.8; }
+  .footer a { color: #9977bb; text-decoration: none; }
+
+  .meta { display: flex; justify-content: space-between; background: #f8f9fb; padding: 10px 48px; border-top: 1px solid #eee; font-size: 11px; color: #aaa; flex-wrap: wrap; gap: 6px; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+  <div class="label">Email Marketing Portfolio — Farhan Siddique &nbsp;|&nbsp; Sequence 3 of 3 &nbsp;|&nbsp; Client Re-Engagement</div>
+
+  <div class="email">
+    <!-- Header -->
+    <div class="header">
+      <div class="logo-badge">Your Brand</div>
+      <h1>We've been thinking about you, [First Name]</h1>
+      <p>It's been a while — and we want to make it worth your time to come back.</p>
+    </div>
+
+    <!-- Seq strip -->
+    <div class="seq-badge">
+      <div>Sequence: <span>Client Re-Engagement</span></div>
+      <div>Email: <span>1 of 8</span></div>
+      <div>Send time: <span>Day 0 — 90 days inactive</span></div>
+      <div>Goal: <span>Re-activate dormant contacts</span></div>
+    </div>
+
+    <!-- Body -->
+    <div class="body">
+      <div class="greeting">Hi [First Name],</div>
+      <p>It's been a while since we last connected — and that's on us, not you.</p>
+      <p>A lot has changed since you were last active. We have been building, improving, and listening — and we wanted to show you what's new before we stop sending to this address entirely.</p>
+
+      <div class="stat-row">
+        <div class="stat">
+          <div class="stat-num">3</div>
+          <div class="stat-label">New features added</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">40%</div>
+          <div class="stat-label">Faster than before</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">2,400+</div>
+          <div class="stat-label">Active users this month</div>
+        </div>
+      </div>
+
+      <div class="reason-list">
+        <h3>What's changed since you left</h3>
+        <div class="reason"><div class="reason-dot"></div>We rebuilt [Feature X] from scratch — it now does [key benefit] in half the time</div>
+        <div class="reason"><div class="reason-dot"></div>[New Feature Y] launched — [one-sentence explanation of the value it adds]</div>
+        <div class="reason"><div class="reason-dot"></div>Pricing has been updated — you may qualify for a better plan at no extra cost</div>
+        <div class="reason"><div class="reason-dot"></div>Our support team is now available [hours] — same day responses, guaranteed</div>
+      </div>
+
+      <p>We know re-engaging is a commitment. So we want to make it easy — no sales call, no pressure. Just click below and we will send you a personalised summary of what changed and how it applies to your specific situation.</p>
+
+      <div class="cta-wrap">
+        <a href="#" class="cta">Show Me What Changed &rarr;</a>
+        <div class="cta-sub">No commitment. Takes 2 minutes.</div>
+      </div>
+
+      <hr class="divider">
+
+      <div class="sig">Talk soon,</div>
+      <div class="sig"><strong>[Your Name]</strong></div>
+      <div class="sig-title">[Title] at [Company Name]</div>
+
+      <div class="ps">P.S. If you're not interested in hearing from us anymore, no hard feelings — just click unsubscribe below. But if there's a specific reason you stepped back, hit reply and tell me. I read every response personally.</div>
+    </div>
+
+    <div class="meta">
+      <span>Subject: We've been thinking about you, [First Name]</span>
+      <span>Preview: It's been a while — here's what changed.</span>
+    </div>
+
+    <div class="footer">
+      <p>[Company Name] &nbsp;·&nbsp; [Address] &nbsp;·&nbsp; [City, Country]<br>
+      <a href="#">Unsubscribe</a> &nbsp;·&nbsp; <a href="#">Privacy Policy</a> &nbsp;·&nbsp; <a href="#">View in browser</a></p>
+    </div>
+  </div>
+
+  <div class="label" style="margin-top:16px">Prepared by Farhan Siddique &nbsp;·&nbsp; HubSpot & Google Certified &nbsp;·&nbsp; Available on Fiverr & Upwork</div>
+</div>
+</body>
+</html>
